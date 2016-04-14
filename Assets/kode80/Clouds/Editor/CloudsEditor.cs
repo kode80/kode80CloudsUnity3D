@@ -19,8 +19,8 @@ using System.Collections;
 using System;
 using System.IO;
 
+using kode80.GUIWrapper;
 using kode80.Utils;
-using kode80.Editor;
 using kode80.Localization;
 
 

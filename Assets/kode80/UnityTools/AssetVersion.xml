@@ -1,0 +1,10 @@
+<asset>
+	<name>Unity Tools</name>
+	<author>kode80</author>
+	<version>1.1.1</version>
+	<notes>* Moved all Unity Tools folders to /kode80/UnityTools
+* Added AssetVersion.xml for automatic updating
+	</notes>
+	<package-uri>https://raw.github.com/kode80/UnityTools/master/kode80UnityTools.unitypackage</package-uri>
+	<version-uri>https://raw.github.com/kode80/UnityTools/develop/Assets/kode80/UnityTools/AssetVersion.xml</version-uri>
+</asset>
