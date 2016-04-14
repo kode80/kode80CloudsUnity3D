@@ -57,9 +57,8 @@ Shader "hidden/kode80/CloudBlender"
 			half4 frag (v2f input) : COLOR
 			{
 				half4 output = tex2D( _MainTex, input.uv);
-				output = pow( output, 2.2);
 
-				return output;
+				return IsGammaSpace() ? output : pow( output, 2.2);
 			}
 			
 			ENDCG
