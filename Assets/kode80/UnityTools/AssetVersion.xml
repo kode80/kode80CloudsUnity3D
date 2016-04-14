@@ -6,5 +6,5 @@
 * Added AssetVersion.xml for automatic updating
 	</notes>
 	<package-uri>https://raw.github.com/kode80/UnityTools/master/kode80UnityTools.unitypackage</package-uri>
-	<version-uri>https://raw.github.com/kode80/UnityTools/develop/Assets/kode80/UnityTools/AssetVersion.xml</version-uri>
+	<version-uri>https://raw.github.com/kode80/UnityTools/master/Assets/kode80/UnityTools/AssetVersion.xml</version-uri>
 </asset>
