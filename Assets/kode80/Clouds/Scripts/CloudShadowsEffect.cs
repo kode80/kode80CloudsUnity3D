@@ -68,7 +68,10 @@ namespace kode80.Clouds
 			_material.SetMatrix( "_InvCamera", targetCamera.cameraToWorldMatrix);
 			_material.SetMatrix( "_InvProjection", targetCamera.projectionMatrix.inverse);
 			_material.SetVector("_Offset", Vector3.zero);
-			_material.SetFloat("_CoverageScale", 1.0f);
+			_material.SetFloat("_CoverageScale", 1.0f / clouds.cloudsSharedProperties.maxDistance);
+			_material.SetVector("_CoverageOffset", clouds.coverageOffset);
+			_material.SetVector( "_LightDirection", clouds.sunLight.transform.forward);
+			clouds.cloudsSharedProperties.ApplyToMaterial( _material);
 
             Graphics.Blit( src, dst, _material);
         }
