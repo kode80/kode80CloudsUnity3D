@@ -2,7 +2,7 @@
 	<name>Unity Tools</name>
 	<author>kode80</author>
 	<version>1.1.3</version>
-	<notes>* Fixed gradient when project is set to linear
+	<notes>* Fixed download when more than one AssetVersion.xml exists
 	</notes>
 	<package-uri>https://raw.github.com/kode80/UnityTools/master/kode80UnityTools.unitypackage</package-uri>
 	<version-uri>https://raw.github.com/kode80/UnityTools/master/Assets/kode80/UnityTools/AssetVersion.xml</version-uri>
