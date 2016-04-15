@@ -21,13 +21,9 @@ Shader "hidden/kode80/CloudShadowPass"
 	}
 	SubShader
 	{
-		Tags { "Queue" = "Background+1" "RenderType"="Transparent" }
-		
 		// No culling or depth
-		Cull Off ZWrite Off ZTest GEqual
-		
-		Blend DstColor Zero
-		
+		Cull Off ZWrite Off ZTest Always
+
 		Pass
 		{
 			CGPROGRAM
@@ -74,22 +70,26 @@ Shader "hidden/kode80/CloudShadowPass"
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float zdepth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
-				float3 ray = i.ray * Linear01Depth(zdepth);
+				fixed4 pixel = tex2D( _MainTex, i.uv);
+				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
+				depth = Linear01Depth( depth);
+				float3 ray = i.ray * depth;
 				float3 pos = mul( _InvCamera, float4( ray, 1.0)).xyz;
 				
-				float2 coverageUV = pos.xz * 0.00001;
+				float2 coverageUV = pos.xz * 0.0001;
 				coverageUV += float2( 0.5, 0.5) + _Offset.xz * 0.2;
 				
 				float4 coverage = tex2D( _CloudCoverage, coverageUV);
-				//half cloudShadow = 1.0 - step( 0.3, coverage.r * coverage.b) * 0.65;
-				half cloudShadow = smoothstep( 0.0, 0.5, coverage.r * coverage.b) * 0.6;
+				//half cloudShadow = step( 0.3, coverage.r * coverage.b) * 0.65;
+				half cloudShadow = smoothstep( 0.0, 0.5, coverage.r) * 0.8;
+
+				cloudShadow *= step( depth, 0.9999);
 				cloudShadow = 1.0 - cloudShadow;
 				
 				// TEST PATTERN
-				//return fmod( round(abs(pos.x)), 2.0) * fmod( round(abs(pos.z)), 2.0);
+				//return pixel * fmod( round(abs(pos.x)), 2.0) * fmod( round(abs(pos.z)), 2.0);
 				
-				return cloudShadow;
+				return pixel * cloudShadow;
 			}
 			ENDCG
 		}

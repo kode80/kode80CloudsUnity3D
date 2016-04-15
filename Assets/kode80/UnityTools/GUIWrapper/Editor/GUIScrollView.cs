@@ -29,13 +29,20 @@ namespace kode80.GUIWrapper
 {
 	public class GUIScrollView : GUIBaseContainer 
 	{
+		public GUILayoutOption[] layoutOptions;
+
 		private Vector2 _scrollPosition;
+
+		public GUIScrollView( params GUILayoutOption[] options)
+		{
+			layoutOptions = options;
+		}
 
 		protected override void BeginContainerOnGUI()
 		{
-			_scrollPosition = EditorGUILayout.BeginScrollView( _scrollPosition);
+			_scrollPosition = EditorGUILayout.BeginScrollView( _scrollPosition, layoutOptions);
 		}
-		
+
 		protected override void EndContainerOnGUI()
 		{
 			EditorGUILayout.EndScrollView();

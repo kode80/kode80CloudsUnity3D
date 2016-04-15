@@ -124,7 +124,6 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.07793749, z: 0, w: -0.99695826}
   m_LocalPosition: {x: 182.82, y: 109.92, z: 164.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 8.94, z: 0}
   m_Children:
   - {fileID: 906947507}
   m_Father: {fileID: 0}
@@ -196,7 +195,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -212,6 +210,7 @@ GameObject:
   - 81: {fileID: 906947505}
   - 114: {fileID: 906947513}
   - 114: {fileID: 906947504}
+  - 114: {fileID: 906947508}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -283,10 +282,22 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 553129539}
   m_RootOrder: 0
+--- !u!114 &906947508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 906947503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c8e3b6ae63ad4989a6c0a138511ae61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clouds: {fileID: 1492530909}
+  targetCamera: {fileID: 906947506}
 --- !u!114 &906947513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +367,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -394,7 +404,7 @@ MonoBehaviour:
   fixedWidth: 960
   fixedHeight: 540
   downsample: 2
-  cloudCoverage: {fileID: 2800000, guid: a6c90ae77f8c73f4c959f64c1ff446cb, type: 3}
+  cloudCoverage: {fileID: 2800000, guid: 4b24d93884f19cf488a5ad4d87db6222, type: 3}
   coverageOffsetX: 0.64
   coverageOffsetY: 0.13
   horizonCoverageStart: 0.2
@@ -568,7 +578,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 283.93213, y: 80.02106, z: 26.48117}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -630,7 +639,6 @@ Transform:
   m_LocalRotation: {x: 0.9676724, y: 0.0021997239, z: -0.008444871, w: 0.25205976}
   m_LocalPosition: {x: 596.3177, y: 90.830894, z: 1078.3235}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 29.199999, y: 181, z: -540}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

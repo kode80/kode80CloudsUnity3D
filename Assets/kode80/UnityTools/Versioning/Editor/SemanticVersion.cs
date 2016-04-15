@@ -32,12 +32,28 @@ namespace kode80.Versioning
 
 		public static bool operator <( SemanticVersion a, SemanticVersion b)
 		{
-			return a.Major < b.Major || a.Minor < b.Minor || a.Patch < b.Patch;
+			if( a.Major < b.Major) { return true; }
+			if( a.Major > b.Major) { return false; }
+
+			if( a.Minor < b.Minor) { return true; }
+			if( a.Minor > b.Minor) { return false; }
+
+			if( a.Patch < b.Patch) { return true; }
+
+			return false;
 		}
 
 		public static bool operator >( SemanticVersion a, SemanticVersion b)
 		{
-			return a.Major > b.Major || a.Minor > b.Minor || a.Patch > b.Patch;
+			if( a.Major > b.Major) { return true; }
+			if( a.Major < b.Major) { return false; }
+
+			if( a.Minor > b.Minor) { return true; }
+			if( a.Minor < b.Minor) { return false; }
+
+			if( a.Patch > b.Patch) { return true; }
+
+			return false;
 		}
 
 		public override string ToString()
