@@ -138,8 +138,14 @@ namespace kode80.Versioning
 				label.style = statusStyle;
 
 				GUIHorizontal buttonsContainer = updateContainer.Add( new GUIHorizontal()) as GUIHorizontal;
-				buttonsContainer.Add( new GUIButton( new GUIContent( "Release Notes"), ReleaseNotesButtonPressed));
-				buttonsContainer.Add( new GUIButton( new GUIContent( "Download"), DownloadButtonPressed));
+				GUIButton button = buttonsContainer.Add( new GUIButton( new GUIContent( "Release Notes"), 
+																		ReleaseNotesButtonPressed)) as GUIButton;
+				button.tag = i;
+
+				button = buttonsContainer.Add( new GUIButton( new GUIContent( "Download"), 
+															  DownloadButtonPressed)) as GUIButton;
+				button.tag = i;
+
 				buttonsContainer.isHidden = remoteVersion == null || 
 											(localVersion.Version < remoteVersion.Version) == false;
 
@@ -174,7 +180,7 @@ namespace kode80.Versioning
 			float step = ((float)gray1 - (float)gray0) / (float)height;
 
 			GUIStyle style = new GUIStyle();
-			Texture2D texture = new Texture2D( 1, height);
+			Texture2D texture = new Texture2D( 1, height, TextureFormat.RGB24, false, true);
 			for( int i=0; i<height; i++) {
 				byte g = (byte)gray;
 				texture.SetPixel( 0, i, new Color32( g, g, g, 255));
