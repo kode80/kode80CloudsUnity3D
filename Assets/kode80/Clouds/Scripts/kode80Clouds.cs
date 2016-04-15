@@ -138,6 +138,8 @@ namespace kode80.Clouds
 		private Texture2D _curlTexture;
 
         private Vector2 _coverageOffset;
+		public Vector2 coverageOffset { get { return _coverageOffset; } }
+
         private Vector3 _baseOffset;
         private Vector3 _detailOffset;
 
