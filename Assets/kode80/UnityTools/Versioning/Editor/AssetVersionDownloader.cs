@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace kode80.Versioning
 {
@@ -25,15 +26,23 @@ namespace kode80.Versioning
 			_queue = new List<AssetVersion>();
 			_mainThreadDelegates = new List<Action>();
 			EditorApplication.update += MainThreadUpdate;
-		}
+            ServicePointManager.ServerCertificateValidationCallback += HandleServerCertificateValidation;
+        }
 
 		~AssetVersionDownloader()
 		{
 			EditorApplication.update -= MainThreadUpdate;
-			CancelAll();
+            ServicePointManager.ServerCertificateValidationCallback -= HandleServerCertificateValidation;
+            CancelAll();
 		}
 
-		public void Add( AssetVersion local)
+        private static bool HandleServerCertificateValidation(object sender, X509Certificate cert, X509Chain chain, System.Net.Security.SslPolicyErrors error)
+        {
+            return true;
+        }
+
+
+        public void Add( AssetVersion local)
 		{
 			_queue.Add( local);
 			AttemptNextDownload();
@@ -67,11 +76,12 @@ namespace kode80.Versioning
 				using( _webClient = new WebClient())
 				{
 					_webClient.DownloadStringCompleted += WebClientCompleted;
-
-					try {
+                    
+                    try {
 						_webClient.DownloadStringAsync( _currentLocalVersion.versionURI);
 					}
-					catch( Exception) {
+					catch( Exception e) {
+                        Debug.Log("dl exception: " + e);
 						HandleFailedDownload();
 					}
 				}
@@ -82,6 +92,10 @@ namespace kode80.Versioning
 		{
 			if( e.Cancelled || e.Error != null) 
 			{
+                if( e.Error != null)
+                {
+                    Debug.Log("dl complete error: " + e.Error);
+                }
 				HandleFailedDownload();
 			}
 			else 

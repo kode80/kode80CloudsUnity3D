@@ -1,14 +1,8 @@
 <asset>
 	<name>Unity Tools</name>
 	<author>kode80</author>
-	<version>1.2.0</version>
-	<notes>* Added GUIObjectField
-* Added GUITextField
-* Added GUIPopup
-* GUIScrollView now accepts layout options
-* GUITextureField now accepts an OnPreAction
-* Moved GUIWrapper to Editor folder (fixes builds)
-* Fixed SemanticVersion comparisons
+	<version>1.2.1</version>
+	<notes>* Fixed https uri's failing on Windows
 	</notes>
 	<package-uri>https://raw.github.com/kode80/UnityTools/master/kode80UnityTools.unitypackage</package-uri>
 	<version-uri>https://raw.github.com/kode80/UnityTools/master/Assets/kode80/UnityTools/AssetVersion.xml</version-uri>
