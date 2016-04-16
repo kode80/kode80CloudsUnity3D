@@ -78,7 +78,8 @@ Shader "hidden/kode80/CloudShadowPass"
 				depth = Linear01Depth( depth);
 				float3 ray = i.ray * depth;
 				float3 pos = mul( _InvCamera, float4( ray, 1.0)).xyz;
-				float3 intersect = InternalRaySphereIntersect(_EarthRadius + _StartHeight, pos, _LightDirection);
+				pos.y += _EarthRadius;
+				float3 intersect = InternalRaySphereIntersect(_EarthRadius + _StartHeight, pos, -_LightDirection);
 
 				float2 unit = intersect.xz * _CoverageScale;
 				float2 coverageUV = unit * 0.5 + 0.5;
@@ -91,7 +92,7 @@ Shader "hidden/kode80/CloudShadowPass"
 				//half cloudShadow = step( 0.3, coverage.r * coverage.b) * 0.65;
 				half cloudShadow = coverage.r;// smoothstep( 0.0, 0.5, coverage.r) * 0.8;
 
-				cloudShadow *= step( depth, 0.9999);
+				cloudShadow *= step( depth, 0.9999) * 0.8;
 				cloudShadow = 1.0 - cloudShadow;
 				
 				// TEST PATTERN
