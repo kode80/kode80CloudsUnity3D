@@ -21,7 +21,7 @@ Shader "hidden/kode80/CloudBlenderEditor"
 	}
 	SubShader 
 	{
-		Tags { "Queue" = "Background+1" "RenderType"="Transparent" }
+		Tags { "Queue" = "Transparent" "RenderType"="Transparent" }
 			
 		Pass
 		{

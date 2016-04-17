@@ -32,16 +32,25 @@ namespace kode80.Clouds
 
 		// Use this for initialization
 		void Start () {
-		}
-		
-		void OnRenderObject()
-		{
+        }
+
+        void OnEnable()
+        {
+            Camera.onPreCull += QuadPreCull;
+        }
+
+        void OnDisable()
+        {
+            Camera.onPreCull -= QuadPreCull;
+        }
+        
+        void QuadPreCull( Camera camera)
+        {
 			if( (Application.isPlaying && renderWhenPlaying == false) || material == null)
 			{
 				return;
 			}
 			
-			Camera camera = Camera.current;
 			int w = camera.pixelWidth;
 			int h = camera.pixelHeight;
 			float z = camera.farClipPlane * 0.9f;
@@ -60,8 +69,8 @@ namespace kode80.Clouds
 			_mesh.triangles = new int[] { 0, 1, 2, 
 										 2, 3, 0};
 			_mesh.RecalculateBounds();
-			material.SetPass(0);
-			Graphics.DrawMeshNow( _mesh, Vector3.zero, Quaternion.identity, 0);
-		}
+
+            Graphics.DrawMesh(_mesh, Vector3.zero, Quaternion.identity, material, 0);
+        }
 	}
 }
