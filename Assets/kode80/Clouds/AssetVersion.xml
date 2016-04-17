@@ -1,0 +1,9 @@
+<asset>
+	<name>Unity Clouds</name>
+	<author>kode80</author>
+	<version>1.0</version>
+	<notes>* Added asset-updater support
+	</notes>
+	<package-uri>http://kode80.com/downloads/assets/kode80Clouds.unitypackage</package-uri>
+	<version-uri>https://raw.github.com/kode80/kode80CloudsUnity3D/tree/master/Assets/kode80/Clouds/AssetVersion.xml</version-uri>
+</asset>
