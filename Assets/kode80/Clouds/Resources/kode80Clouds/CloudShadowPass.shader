@@ -21,8 +21,8 @@ Shader "hidden/kode80/CloudShadowPass"
 	}
 	SubShader
 	{
-		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
+		Blend DstColor Zero
 
 		Pass
 		{
@@ -56,6 +56,7 @@ Shader "hidden/kode80/CloudShadowPass"
 			float _CoverageScale;
 			float2 _CoverageOffset;
 			float3 _LightDirection;
+			float _ShadowStrength;
 			
 			v2f vert (appdata v)
 			{
@@ -85,20 +86,15 @@ Shader "hidden/kode80/CloudShadowPass"
 				float2 coverageUV = unit * 0.5 + 0.5;
 				coverageUV += _CoverageOffset;
 
-				//float2 coverageUV = pos.xz * 0.0001;
-				//coverageUV += float2( 0.5, 0.5) + _Offset.xz * 0.2;
-				
 				float4 coverage = tex2D( _CloudCoverage, coverageUV);
-				//half cloudShadow = step( 0.3, coverage.r * coverage.b) * 0.65;
-				half cloudShadow = coverage.r;// smoothstep( 0.0, 0.5, coverage.r) * 0.8;
-
-				cloudShadow *= step( depth, 0.9999) * 0.8;
+				half cloudShadow = coverage.r;
+				cloudShadow *= _ShadowStrength;
 				cloudShadow = 1.0 - cloudShadow;
 				
 				// TEST PATTERN
-				//return pixel * fmod( round(abs(pos.x)), 2.0) * fmod( round(abs(pos.z)), 2.0);
+				//return fmod( round(abs(pos.x)), 2.0) * fmod( round(abs(pos.z)), 2.0);
 				
-				return pixel * cloudShadow;
+				return cloudShadow;
 			}
 			ENDCG
 		}
