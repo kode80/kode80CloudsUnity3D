@@ -7,6 +7,7 @@
 * Hardcoded input in demo's FlyCamera script (fixes Input Manager errors)
 * Fixed compile errors for < Unity 5.3.3
 * Fixed lighting when project is set to Gamma
+* Updated documentation
 	</notes>
 	<package-uri>http://kode80.com/downloads/assets/kode80Clouds.unitypackage</package-uri>
 	<version-uri>https://raw.github.com/kode80/kode80CloudsUnity3D/master/Assets/kode80/Clouds/AssetVersion.xml</version-uri>
