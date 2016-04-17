@@ -72,25 +72,32 @@ namespace kode80.Clouds.Examples
 			transform.position = Vector3.Lerp( transform.position, _targetPosition, 0.5f); 
 		}
 
-		void UpdateInput()
-		{
-			if( Input.GetKey( KeyCode.W)) { _movement.z = 1.0f; }
-			else if( Input.GetKey( KeyCode.S)) { _movement.z = -1.0f; }
-			else { _movement.z = 0.0f; }
+        void UpdateInput()
+        {
+            if (Input.GetKey(KeyCode.W)) { _movement.z = 1.0f; }
+            else if (Input.GetKey(KeyCode.S)) { _movement.z = -1.0f; }
+            else { _movement.z = 0.0f; }
 
-			if( Input.GetKey( KeyCode.D)) { _movement.x = 1.0f; }
-			else if( Input.GetKey( KeyCode.A)) { _movement.x = -1.0f; }
-			else { _movement.x = 0.0f; }
+            if (Input.GetKey(KeyCode.D)) { _movement.x = 1.0f; }
+            else if (Input.GetKey(KeyCode.A)) { _movement.x = -1.0f; }
+            else { _movement.x = 0.0f; }
 
-			if( Input.GetKey( KeyCode.E)) { _movement.y = 1.0f; }
-			else if( Input.GetKey( KeyCode.Q)) { _movement.y = -1.0f; }
-			else { _movement.y = 0.0f; }
+            if (Input.GetKey(KeyCode.E)) { _movement.y = 1.0f; }
+            else if (Input.GetKey(KeyCode.Q)) { _movement.y = -1.0f; }
+            else { _movement.y = 0.0f; }
 
-			_isRunning = Input.GetKey( KeyCode.LeftShift);
+            _isRunning = Input.GetKey(KeyCode.LeftShift);
 
-			Vector2 mouse = (Vector2)Input.mousePosition;
-			_mouseDelta = mouse - _mousePrev;
-			_mousePrev = mouse;
+            Vector2 mouse = (Vector2)Input.mousePosition;
+            if (Input.GetMouseButtonDown(0)) {
+                _mousePrev = mouse;
+            }
+            else if (Input.GetMouseButton(0)) {
+                _mouseDelta = mouse - _mousePrev;
+            }
+            else {
+                _mouseDelta = Vector2.zero;
+            }
 		}
 	}
 }
