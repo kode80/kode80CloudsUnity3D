@@ -168,6 +168,41 @@ namespace kode80.Clouds
 			CreateRenderTextures();
             CreateFullscreenQuad();
 		}
+
+		void OnDrawGizmos()
+		{
+			float earthRadius = cloudsSharedProperties.earthRadius;
+			float startHeight = cloudsSharedProperties.atmosphereStartHeight;
+			float endHeight = cloudsSharedProperties.atmosphereEndHeight;
+
+			float innerRadius = earthRadius + startHeight;
+			float outerRadius = earthRadius + endHeight;
+			float distant = cloudsSharedProperties.maxDistance - cloudsSharedProperties.maxRayDistance;
+
+			Vector3 position = transform.position;
+			Vector3 center = position;
+			center.y -= earthRadius;
+
+			Gizmos.color = Color.gray;
+			Gizmos.DrawWireSphere( center, innerRadius);
+			Gizmos.color = Color.black;
+			Gizmos.DrawWireSphere( center, outerRadius);
+			Gizmos.color = Color.white;
+			Gizmos.DrawLine( position + new Vector3( 0.0f, startHeight, 0.0f), 
+							 position + new Vector3( 0.0f, endHeight, 0.0f));
+
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine( position, 
+							 position + new Vector3( distant, 0.0f, 0.0f));
+
+			Gizmos.color = Color.green;
+			Gizmos.DrawLine( position, 
+							 position + new Vector3( 0.0f, cloudsSharedProperties.atmosphereStartHeight, 0.0f));
+
+			Gizmos.color = Color.blue;
+			Gizmos.DrawLine( position, 
+							 position + new Vector3( 0.0f, 0.0f, distant));
+		}
 		
 		void OnDisable()
 		{
