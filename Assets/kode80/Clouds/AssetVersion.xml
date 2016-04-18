@@ -2,8 +2,10 @@
 	<name>kode80 Clouds</name>
 	<author>kode80</author>
 	<version>1.1.0</version>
-	<notes>* Added kode80CloudShadows component (add to directional light)
+	<notes>* Added kode80CloudShadows component (place on directional light)
 * Added AssetUpdater (Window/kode80/Check for Asset Updates)
+* kode80Clouds now draws a gizmo for visualizing horizon/atmosphere size
+* kode80Clouds' transform now affects virtual skydome position in scene
 * Hardcoded input in demo's FlyCamera script (fixes Input Manager errors)
 * Fixed compile errors for < Unity 5.3.3
 * Fixed lighting when project is set to Gamma
