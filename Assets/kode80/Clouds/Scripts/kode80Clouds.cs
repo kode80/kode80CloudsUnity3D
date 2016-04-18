@@ -367,7 +367,7 @@ namespace kode80.Clouds
 				CreateRenderTextures();
 			}
             
-            Vector3 pos = Vector3.Scale( _camera.transform.position, cameraPositionScaler);
+			Vector3 pos = Vector3.Scale( _camera.transform.position - transform.position, cameraPositionScaler);
 			pos.y += _cloudsSharedProperties.earthRadius;
 			_cloudsSharedProperties.cameraPosition = pos;
 
