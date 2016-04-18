@@ -8,7 +8,7 @@
 * kode80Clouds' transform now affects virtual skydome position in scene
 * Hardcoded input in demo's FlyCamera script (fixes Input Manager errors)
 * Fixed Coverage Editor's brush position for all atmosphere sizes
-* Fixed compile errors for < Unity 5.3.3
+* Fixed compile errors for below Unity 5.3.3
 * Fixed lighting when project is set to Gamma
 * Updated documentation
 	</notes>
