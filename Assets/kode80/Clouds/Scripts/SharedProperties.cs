@@ -184,8 +184,8 @@ namespace kode80.Clouds
 			rayDirection = theCamera.cameraToWorldMatrix.MultiplyVector( rayDirection).normalized;
 			
 			float radius = earthRadius + atmosphereStartHeight;
-			Vector3 origin = new Vector3( 0.0f, earthRadius, 0.0f);
-			atmospherePoint = InternalRaySphereIntersect( radius, origin, rayDirection);
+
+			atmospherePoint = InternalRaySphereIntersect( radius, cameraPosition, rayDirection);
 			
 			return atmospherePoint;
 		}
