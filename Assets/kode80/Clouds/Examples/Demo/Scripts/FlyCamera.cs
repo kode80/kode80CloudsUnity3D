@@ -29,7 +29,7 @@ namespace kode80.Clouds.Examples
 {
 	public class FlyCamera : MonoBehaviour 
 	{
-		public float lookSpeed = 15.0f;
+		public float lookSpeed = 0.2f;
 		public float moveSpeed = 15.0f;
 		public float runMultiplier = 4.0f;
 		
