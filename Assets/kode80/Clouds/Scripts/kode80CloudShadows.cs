@@ -65,7 +65,7 @@ namespace kode80.Clouds
 
             if( _material == null)
             {
-                _material = new Material(Shader.Find("hidden/kode80/CloudShadowPass"));
+                _material = new Material(Shader.Find("Hidden/kode80/CloudShadowPass"));
                 _material.hideFlags = HideFlags.HideAndDontSave;
             }
 

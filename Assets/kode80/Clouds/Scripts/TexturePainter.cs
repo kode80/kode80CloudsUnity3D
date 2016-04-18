@@ -24,7 +24,7 @@ namespace kode80.Clouds
 
 		void OnEnable()
 		{
-			_material = new Material( Shader.Find( "hidden/kode80/TextureBrush"));
+			_material = new Material( Shader.Find( "Hidden/kode80/TextureBrush"));
 			_material.hideFlags = HideFlags.HideAndDontSave;
 		}
 

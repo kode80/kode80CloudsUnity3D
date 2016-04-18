@@ -13,7 +13,7 @@
 //
 //***************************************************
 
-Shader "hidden/kode80/TextureBrush" 
+Shader "Hidden/kode80/TextureBrush" 
 {
 	Properties 
 	{

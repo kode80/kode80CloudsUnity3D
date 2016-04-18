@@ -13,7 +13,7 @@
 //
 //***************************************************
 
-Shader "hidden/kode80/CloudShadowPass"
+Shader "Hidden/kode80/CloudShadowPass"
 {
 	Properties
 	{

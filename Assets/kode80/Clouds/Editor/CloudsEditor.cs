@@ -274,7 +274,7 @@ namespace kode80.Clouds
 			                                                                typeof(FullScreenQuad));
 			quadGO.tag = "EditorOnly";
 			
-			Material material = new Material( Shader.Find( "hidden/kode80/CloudBlenderEditor"));
+			Material material = new Material( Shader.Find( "Hidden/kode80/CloudBlenderEditor"));
 			material.hideFlags = HideFlags.HideAndDontSave;
 			FullScreenQuad quad = quadGO.GetComponent<FullScreenQuad>();
 			quad.material = material;

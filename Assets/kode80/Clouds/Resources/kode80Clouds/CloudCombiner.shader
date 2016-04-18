@@ -13,7 +13,7 @@
 //
 //***************************************************
 
-Shader "hidden/kode80/CloudCombiner" 
+Shader "Hidden/kode80/CloudCombiner" 
 {
 	Properties 
 	{

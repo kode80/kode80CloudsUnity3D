@@ -401,25 +401,25 @@ namespace kode80.Clouds
 
 			if( _cloudMaterial == null)
 			{
-				_cloudMaterial = new Material( Shader.Find( "hidden/kode80/VolumeClouds"));
+				_cloudMaterial = new Material( Shader.Find( "Hidden/kode80/VolumeClouds"));
 				_cloudMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
 			
 			if( _cloudCombinerMaterial == null)
 			{
-				_cloudCombinerMaterial = new Material( Shader.Find( "hidden/kode80/CloudCombiner"));
+				_cloudCombinerMaterial = new Material( Shader.Find( "Hidden/kode80/CloudCombiner"));
 				_cloudCombinerMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
 			
 			if( _cloudBlenderMaterial == null)
 			{
-				_cloudBlenderMaterial = new Material( Shader.Find( "hidden/kode80/CloudBlender"));
+				_cloudBlenderMaterial = new Material( Shader.Find( "Hidden/kode80/CloudBlender"));
 				_cloudBlenderMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
 			
 			if( _cloudShadowPassMaterial == null)
 			{
-				_cloudShadowPassMaterial = new Material( Shader.Find( "hidden/kode80/CloudShadowPass"));
+				_cloudShadowPassMaterial = new Material( Shader.Find( "Hidden/kode80/CloudShadowPass"));
 				_cloudShadowPassMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
 			

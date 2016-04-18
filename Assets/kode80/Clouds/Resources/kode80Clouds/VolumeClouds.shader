@@ -13,7 +13,7 @@
 //
 //***************************************************
 
-Shader "hidden/kode80/VolumeClouds" 
+Shader "Hidden/kode80/VolumeClouds" 
 {
 	Properties 
 	{
