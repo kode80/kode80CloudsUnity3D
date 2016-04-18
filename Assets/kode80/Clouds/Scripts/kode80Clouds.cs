@@ -159,6 +159,7 @@ namespace kode80.Clouds
 		public Clouds.SharedProperties cloudsSharedProperties { get { return _cloudsSharedProperties; } }
 
 		private FullScreenQuad _fullScreenQuad;
+		public FullScreenQuad fullScreenQuad { get { return _fullScreenQuad; } }
 
 		void OnEnable()
         {
