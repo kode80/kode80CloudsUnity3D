@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71038ce8c385e5445b893835a42597bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSpeed: 15
+  lookSpeed: 0.2
   moveSpeed: 15
   runMultiplier: 4
 --- !u!4 &553129539
@@ -210,7 +210,6 @@ GameObject:
   - 81: {fileID: 906947505}
   - 114: {fileID: 906947513}
   - 114: {fileID: 906947504}
-  - 114: {fileID: 906947508}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -285,19 +284,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 553129539}
   m_RootOrder: 0
---- !u!114 &906947508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906947503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c8e3b6ae63ad4989a6c0a138511ae61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clouds: {fileID: 1492530909}
-  targetCamera: {fileID: 906947506}
 --- !u!114 &906947513
 MonoBehaviour:
   m_ObjectHideFlags: 0
