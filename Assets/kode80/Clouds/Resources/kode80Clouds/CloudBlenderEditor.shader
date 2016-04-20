@@ -120,6 +120,7 @@ Shader "Hidden/kode80/CloudBlenderEditor"
 					}
 				}
 
+				// IsGamma() not available in Unity 5.2.4
 				return _IsGamma ? color : pow( color, 2.2);
 			}
 			

@@ -39,6 +39,7 @@ Shader "Hidden/kode80/CloudBlender"
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;
+			bool _IsGamma;
 			
 			struct v2f {
 			   float4 position : SV_POSITION;
@@ -58,7 +59,8 @@ Shader "Hidden/kode80/CloudBlender"
 			{
 				half4 output = tex2D( _MainTex, input.uv);
 
-				return IsGammaSpace() ? output : pow( output, 2.2);
+				// IsGamma() not available in Unity 5.2.4
+				return _IsGamma ? output : pow( output, 2.2);
 			}
 			
 			ENDCG

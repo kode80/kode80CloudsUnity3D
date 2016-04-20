@@ -409,6 +409,7 @@ namespace kode80.Clouds
 			_cloudsSharedProperties.EndFrame();
 
 			_cloudBlenderMaterial.SetTexture( "_MainTex", currentFrame);
+			_cloudBlenderMaterial.SetInt( "_IsGamma", QualitySettings.activeColorSpace == ColorSpace.Gamma ? 1 : 0);
 		}
         
         private Gradient CreateCloudGradient( float position0, float position1, float position2, float position3)
