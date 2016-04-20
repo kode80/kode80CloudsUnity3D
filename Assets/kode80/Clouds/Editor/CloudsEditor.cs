@@ -242,6 +242,7 @@ namespace kode80.Clouds
 			_fullScreenQuad.material.SetFloat( "_DrawType", 0.0f);
 			_fullScreenQuad.material.SetFloat( "_DrawCursor", _mode != 0 ? 1.0f : 0.0f);
 			_fullScreenQuad.material.SetFloat( "_CursorRadius", _editorState.cursorRadius * pixelToCloudSpace);
+			_fullScreenQuad.material.SetInt( "_IsGamma", QualitySettings.activeColorSpace == ColorSpace.Gamma ? 1 : 0);
 			_clouds.cloudsSharedProperties.ApplyToMaterial( _fullScreenQuad.material);
 		}
 

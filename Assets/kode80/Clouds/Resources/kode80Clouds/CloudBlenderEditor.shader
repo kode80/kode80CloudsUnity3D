@@ -47,6 +47,7 @@ Shader "Hidden/kode80/CloudBlenderEditor"
 			float _DrawCursor;
 			float3 _Cursor;
 			float _CursorRadius;
+			bool _IsGamma;
 			
 			
 			clouds_v2f vert(appdata_base v)
@@ -119,9 +120,7 @@ Shader "Hidden/kode80/CloudBlenderEditor"
 					}
 				}
 
-				color = pow( color, 2.2);
-
-				return color;
+				return _IsGamma ? color : pow( color, 2.2);
 			}
 			
 			ENDCG
