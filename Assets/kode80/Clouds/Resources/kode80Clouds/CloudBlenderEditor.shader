@@ -48,13 +48,18 @@ Shader "Hidden/kode80/CloudBlenderEditor"
 			float3 _Cursor;
 			float _CursorRadius;
 			bool _IsGamma;
-			
+
+			float4 _MainTex_TexelSize;
 			
 			clouds_v2f vert(appdata_base v)
 			{
 			   	clouds_v2f o;
 				o.position = float4(v.vertex.xyz, 1.0);
 				o.uv = v.texcoord.xy;
+
+				if( _ProjectionParams.x < 0) {
+				        o.uv.y = 1-o.uv.y;
+				}
 				
 				o.cameraRay = UVToCameraRay( o.uv);
 				

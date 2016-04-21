@@ -36,10 +36,10 @@ namespace kode80.Clouds
             Vector3 v2 = new Vector3(1.0f, 1.0f, 1.0f);
             Vector3 v3 = new Vector3(-1.0f, 1.0f, 1.0f);
 
-            Vector2 uv0 = new Vector2(0.0f, 1.0f);
-            Vector2 uv1 = new Vector2(1.0f, 1.0f);
-            Vector2 uv2 = new Vector2(1.0f, 0.0f);
-            Vector2 uv3 = new Vector2(0.0f, 0.0f);
+            Vector2 uv0 = new Vector2(0.0f, 0.0f);
+            Vector2 uv1 = new Vector2(1.0f, 0.0f);
+            Vector2 uv2 = new Vector2(1.0f, 1.0f);
+            Vector2 uv3 = new Vector2(0.0f, 1.0f);
 
             _mesh.vertices = new Vector3[] { v0, v1, v2, v3 };
             _mesh.uv = new Vector2[] { uv0, uv1, uv2, uv3 };
