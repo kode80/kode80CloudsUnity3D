@@ -49,7 +49,7 @@ Shader "Hidden/kode80/CloudBlender"
 			v2f vert(appdata_base v)
 			{
 			   	v2f o;
-				o.position = mul( UNITY_MATRIX_MVP, v.vertex);
+				o.position = float4(v.vertex.xyz, 1.0);
 				o.uv = v.texcoord;
 				
 			   	return o;

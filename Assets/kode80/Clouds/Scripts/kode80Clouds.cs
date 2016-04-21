@@ -276,9 +276,7 @@ namespace kode80.Clouds
         void CloudsOnPreCull( Camera currentCamera)
         {
             bool validCamera = _camera != null && currentCamera == _camera;
-
-            _fullScreenQuad.enabled = validCamera;
-
+            
             if( validCamera)
             {
                 UpdateAnimatedProperties();

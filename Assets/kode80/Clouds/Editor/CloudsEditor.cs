@@ -180,11 +180,8 @@ namespace kode80.Clouds
 
 					
 					
-					_fullScreenQuad.enabled = true;
 					_fullScreenQuad.material.SetTexture( "_MainTex", _clouds.currentFrame);
 					_cloudsCamera.Render();
-					_fullScreenQuad.enabled = false;
-
 
 					Repaint();
 				}
@@ -279,7 +276,6 @@ namespace kode80.Clouds
 			material.hideFlags = HideFlags.HideAndDontSave;
 			FullScreenQuad quad = quadGO.GetComponent<FullScreenQuad>();
 			quad.material = material;
-			quad.enabled = false;
 
 			return quad;
 		}
@@ -335,6 +331,7 @@ namespace kode80.Clouds
 
 			_fullScreenQuad = CreateFullScreenQuad();
 			_cloudsCamera = CreateCloudsCamera();
+            _fullScreenQuad.targetCamera = _cloudsCamera;
 
 			_clouds.SetCamera( _cloudsCamera);
 			_clouds.onValidateDelegate += OnCloudsValidate;

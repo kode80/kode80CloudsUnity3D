@@ -22,15 +22,39 @@ namespace kode80.Clouds
 	{
 		public Material material;
 		public bool renderWhenPlaying;
+        public Camera targetCamera;
 		private Mesh _mesh;
+        private MeshFilter _filter;
+        private MeshRenderer _renderer;
 
 		void Awake()
 		{
 			_mesh = new Mesh();
 			_mesh.hideFlags = HideFlags.HideAndDontSave;
-		}
+            Vector3 v0 = new Vector3(-1.0f, -1.0f, 1.0f);
+            Vector3 v1 = new Vector3(1.0f, -1.0f, 1.0f);
+            Vector3 v2 = new Vector3(1.0f, 1.0f, 1.0f);
+            Vector3 v3 = new Vector3(-1.0f, 1.0f, 1.0f);
 
-		// Use this for initialization
+            Vector2 uv0 = new Vector2(0.0f, 1.0f);
+            Vector2 uv1 = new Vector2(1.0f, 1.0f);
+            Vector2 uv2 = new Vector2(1.0f, 0.0f);
+            Vector2 uv3 = new Vector2(0.0f, 0.0f);
+
+            _mesh.vertices = new Vector3[] { v0, v1, v2, v3 };
+            _mesh.uv = new Vector2[] { uv0, uv1, uv2, uv3 };
+            _mesh.triangles = new int[] { 0, 1, 2,
+                                         2, 3, 0};
+            _mesh.bounds = new Bounds(Vector3.zero, new Vector3(float.MaxValue, float.MaxValue, float.MaxValue));
+
+            _renderer = gameObject.AddComponent<MeshRenderer>();
+            _renderer.hideFlags = HideFlags.HideAndDontSave;
+
+            _filter = gameObject.AddComponent<MeshFilter>();
+            _filter.hideFlags = HideFlags.HideAndDontSave;
+            _filter.sharedMesh = _mesh;
+		}
+        
 		void Start () {
         }
 
@@ -43,34 +67,17 @@ namespace kode80.Clouds
         {
             Camera.onPreCull -= QuadPreCull;
         }
+
+        void LateUpdate()
+        {
+            _renderer.enabled = true;
+            _renderer.sharedMaterial = material;
+        }
         
         void QuadPreCull( Camera camera)
         {
-			if( (Application.isPlaying && renderWhenPlaying == false) || material == null)
-			{
-				return;
-			}
-			
-			int w = camera.pixelWidth;
-			int h = camera.pixelHeight;
-			float z = camera.farClipPlane * 0.9f;
-			Vector3 v0 = camera.ScreenToWorldPoint( new Vector3( 0.0f, 0.0f, z));
-			Vector3 v1 = camera.ScreenToWorldPoint( new Vector3( w, 0.0f, z));
-			Vector3 v2 = camera.ScreenToWorldPoint( new Vector3( w, h, z));
-			Vector3 v3 = camera.ScreenToWorldPoint( new Vector3( 0.0f, h, z));
-			
-			Vector2 uv0 = new Vector2( 0.0f, 0.0f);
-			Vector2 uv1 = new Vector2( 1.0f, 0.0f);
-			Vector2 uv2 = new Vector2( 1.0f, 1.0f);
-			Vector2 uv3 = new Vector2( 0.0f, 1.0f);
-			
-			_mesh.vertices = new Vector3[] { v0, v1, v2, v3 };
-			_mesh.uv = new Vector2[] { uv0, uv1, uv2, uv3 };
-			_mesh.triangles = new int[] { 0, 1, 2, 
-										 2, 3, 0};
-			_mesh.RecalculateBounds();
-
-            Graphics.DrawMesh(_mesh, Vector3.zero, Quaternion.identity, material, 0);
+            Camera target = targetCamera ?? Camera.main;
+            _renderer.enabled = camera == target;
         }
 	}
 }
