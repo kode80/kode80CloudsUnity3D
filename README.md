@@ -12,6 +12,12 @@ If you'd like to use kode80 Clouds for commercial purposes, or support this & fu
 The latest packaged version can be downloaded here: [kode80Clouds.unitypackage](http://kode80.com/downloads/assets/kode80Clouds.unitypackage)
 
 ## ChangeLog
+### kode80 Clouds 1.1.1 (April 20th 2016):
+* Fixed shader compilation on < 5.3.0
+* Fixed GUI compilation error on < 5.3.0
+* Fixed draw order bug with transparent materials
+* Fixed clouds not displaying when Unity water is visible
+
 ### kode80 Clouds 1.1.0 (April 18th 2016):
 * Added kode80CloudShadows component (place on directional light)
 * Added AssetUpdater (Window/kode80/Check for Asset Updates)
