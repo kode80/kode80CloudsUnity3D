@@ -54,7 +54,12 @@ namespace kode80.GUIWrapper
 
 		protected override void CustomOnGUI ()
 		{
+			#if UNITY_5_3 || UNITY_5_3_OR_NEWER
 			int newValue = EditorGUILayout.DelayedIntField( _content, value);
+			#else
+			int newValue = EditorGUILayout.IntField( _content, value);
+			#endif
+
 
 			if( newValue != value && newValue >= minValue && newValue <= maxValue)
 			{
