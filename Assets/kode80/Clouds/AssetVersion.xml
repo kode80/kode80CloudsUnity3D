@@ -1,11 +1,8 @@
 <asset>
 	<name>kode80 Clouds</name>
 	<author>kode80</author>
-	<version>1.1.1</version>
-	<notes>* Fixed shader compilation on &lt; 5.3.0
-* Fixed GUI compilation error on &lt; 5.3.0
-* Fixed draw order bug with transparent materials
-* Fixed clouds not displaying when Unity water is visible
+	<version>1.1.2</version>
+	<notes>* Fixed clouds not appearing in certain multi camera scenes
 	</notes>
 	<package-uri>http://kode80.com/downloads/assets/kode80Clouds.unitypackage</package-uri>
 	<version-uri>https://raw.github.com/kode80/kode80CloudsUnity3D/master/Assets/kode80/Clouds/AssetVersion.xml</version-uri>

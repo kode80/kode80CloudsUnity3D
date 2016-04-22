@@ -1,6 +1,10 @@
 kode80 Clouds ChangeLog
 ---------------------
 
+kode80 Clouds 1.1.2 (...)
+* Fixed clouds not appearing in certain multi camera scenes
+
+
 kode80 Clouds 1.1.1 (April 20th 2016)
 * Fixed shader compilation on < 5.3.0
 * Fixed GUI compilation error on < 5.3.0

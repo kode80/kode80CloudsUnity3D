@@ -305,6 +305,7 @@ namespace kode80.Clouds
 			if( theCamera != _camera)
 			{
 				_camera = theCamera;
+				_fullScreenQuad.targetCamera = theCamera;
 			}
 		}
 		
