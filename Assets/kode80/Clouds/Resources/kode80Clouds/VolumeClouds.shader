@@ -38,7 +38,7 @@ Shader "Hidden/kode80/VolumeClouds"
 			
 			
 			sampler2D _MainTex;
-			sampler2D _CameraDepthTexture;
+			sampler2D _LinearDepthTex;
 			
 			sampler3D _Perlin3D;
 			sampler3D _Detail3D;
@@ -314,7 +314,13 @@ Shader "Hidden/kode80/VolumeClouds"
 				half4 color = half4( 0.0, 0.0, 0.0, 0.0);
 				float3 rayDirection = normalize( i.cameraRay);
 
-				if( rayDirection.y > _RayMinimumY)
+				float decodedDepth = tex2D( _LinearDepthTex, i.uv).r;
+				if( decodedDepth == 0.0)
+				{
+					color = half4( 1.0, 0.0, 1.0, 0.0);
+				}
+
+				if( rayDirection.y > _RayMinimumY && decodedDepth > 0.0)
 				{
 					float2 uv = i.uv;
 					float3 ray = InternalRaySphereIntersect(_EarthRadius + _StartHeight, _CameraPosition, rayDirection);

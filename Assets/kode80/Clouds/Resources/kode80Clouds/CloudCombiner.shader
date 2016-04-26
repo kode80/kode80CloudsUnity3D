@@ -40,7 +40,7 @@ Shader "Hidden/kode80/CloudCombiner"
 			sampler2D _MainTex;
 			sampler2D _SubFrame;
 			sampler2D _PrevFrame;
-			
+			sampler2D _LinearDepthTex;
 			
 			struct v2f {
 			   float4 position : SV_POSITION;
@@ -58,6 +58,12 @@ Shader "Hidden/kode80/CloudCombiner"
 			
 			half4 frag (v2f input) : COLOR
 			{
+				float decodedDepth = tex2D( _LinearDepthTex, input.uv).r;
+				if( decodedDepth == 0.0)
+				{
+					return half4( 1.0, 0.0, 1.0, 0.0);
+				}
+
 				float2 uv = floor(input.uv * _FrameSize);
 				float2 uv2 = (floor(input.uv * _SubFrameSize) + 0.5) / _SubFrameSize;
 				
@@ -80,18 +86,22 @@ Shader "Hidden/kode80/CloudCombiner"
 					float4 reproj = mul( _Projection, prevPos);
 					reproj /= reproj.w;
 					reproj.xy = reproj.xy * 0.5 + 0.5;
-					
+
 					if( reproj.y < 0.0 || reproj.y > 1.0 || reproj.x < 0.0 || reproj.x > 1.0)
 					{
-						//cloud = float4( 1.0, 0.0, 0.0, 1.0);
 						cloud = tex2D( _SubFrame, input.uv);
 					}
 					else
 					{
 						cloud = tex2D( _PrevFrame, reproj.xy);
+						if( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0)
+						//if( cloud.a == 0)
+						{
+							cloud = tex2D( _SubFrame, input.uv);
+						}
 					}
 				}
-				
+
 				return cloud;
 			}
 			

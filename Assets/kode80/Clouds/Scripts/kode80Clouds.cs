@@ -132,6 +132,9 @@ namespace kode80.Clouds
 		private Material _cloudCombinerMaterial;
 		private Material _cloudBlenderMaterial;
 		private Material _cloudShadowPassMaterial;
+		private Shader _linearDepthShader;
+		private bool _renderingDepth = false;
+
 		private Camera _camera;
 		private Texture3D _perlin3D;
 		private Texture3D _detail3D;
@@ -160,6 +163,8 @@ namespace kode80.Clouds
 
 		private FullScreenQuad _fullScreenQuad;
 		public FullScreenQuad fullScreenQuad { get { return _fullScreenQuad; } }
+
+		private Camera _depthCamera;
 
 		void OnEnable()
         {
@@ -275,7 +280,7 @@ namespace kode80.Clouds
         
         void CloudsOnPreCull( Camera currentCamera)
         {
-            bool validCamera = _camera != null && currentCamera == _camera;
+			bool validCamera = _renderingDepth == false && _camera != null && currentCamera == _camera;
             
             if( validCamera)
             {
@@ -305,6 +310,7 @@ namespace kode80.Clouds
 			if( theCamera != _camera)
 			{
 				_camera = theCamera;
+				//_camera.depthTextureMode = DepthTextureMode.Depth;
 				_fullScreenQuad.targetCamera = theCamera;
 			}
 		}
@@ -365,12 +371,43 @@ namespace kode80.Clouds
 				DestroyRenderTextures();
 				CreateRenderTextures();
 			}
+
+
+			//// DEPTH ////
+			if( _depthCamera == null) {
+				_depthCamera = new GameObject().AddComponent<Camera>();
+				_depthCamera.gameObject.hideFlags = HideFlags.DontSave;
+			}
+			_depthCamera.CopyFrom( _camera);
+			_depthCamera.enabled = false;
+			_depthCamera.hdr = false;
+			RenderTexture smallDepthTexture = RenderTexture.GetTemporary( _subFrame.width / 8, 
+																	 _subFrame.height / 8, 
+																	 _subFrame.depth, 
+																	 RenderTextureFormat.R8);
+			
+			_depthCamera.targetTexture = smallDepthTexture;
+			_depthCamera.clearFlags = CameraClearFlags.SolidColor;
+			_depthCamera.backgroundColor = new Color( 1.0f, 1.0f, 1.0f, 1.0f);
+			_depthCamera.renderingPath = RenderingPath.Forward;
+			_depthCamera.SetReplacementShader( _linearDepthShader, null);
+
+			_depthCamera.Render();
+			_depthCamera.targetTexture = null;
+
+
+			RenderTexture depthTexture = smallDepthTexture;
+
+			//// DEPTH END ////
+
+
             
 			Vector3 pos = Vector3.Scale( _camera.transform.position - transform.position, cameraPositionScaler);
 			pos.y += _cloudsSharedProperties.earthRadius;
 			_cloudsSharedProperties.cameraPosition = pos;
 
 			_cloudsSharedProperties.ApplyToMaterial( _cloudMaterial, true);
+			_cloudMaterial.SetTexture( "_LinearDepthTex", depthTexture);
 			UpdateMaterialsPublicProperties();
 			
 			// If we don't store the current active RT and
@@ -398,12 +435,13 @@ namespace kode80.Clouds
 			RenderTexture combined = RenderTexture.GetTemporary( _previousFrame.width, _previousFrame.height, 0, format, RenderTextureReadWrite.Linear);
 			combined.filterMode = FilterMode.Bilinear;
 
+			_cloudCombinerMaterial.SetTexture( "_LinearDepthTex", depthTexture);
 			Graphics.Blit( null, combined, _cloudCombinerMaterial);
 			Graphics.Blit( combined, _previousFrame);
 
 			RenderTexture.active = previousActiveRenderTexture;
 			RenderTexture.ReleaseTemporary( combined);
-			
+			RenderTexture.ReleaseTemporary( depthTexture);
 
 			_cloudsSharedProperties.EndFrame();
 
@@ -472,6 +510,12 @@ namespace kode80.Clouds
 			if( _curlTexture == null)
 			{
 				_curlTexture = Resources.Load( "kode80Clouds/CurlNoise") as Texture2D;
+			}
+
+			if( _linearDepthShader == null)
+			{
+				_linearDepthShader = Shader.Find( "Hidden/kode80/LinearDepth");
+				_linearDepthShader.hideFlags = HideFlags.HideAndDontSave;
 			}
 		}
         

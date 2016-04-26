@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookSpeed: 0.2
   moveSpeed: 15
-  runMultiplier: 4
+  runMultiplier: 8
 --- !u!4 &553129539
 Transform:
   m_ObjectHideFlags: 0
