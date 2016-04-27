@@ -171,6 +171,7 @@ namespace kode80.Clouds
 		void OnEnable()
         {
             Camera.onPreCull += CloudsOnPreCull;
+			CreateDepthCameraIfNeeded();
             CreateMaterialsIfNeeded();
 			CreateRenderTextures();
             CreateFullscreenQuad();
@@ -217,6 +218,7 @@ namespace kode80.Clouds
             DestroyMaterials();
 			DestroyRenderTextures();
             DestroyFullscreenQuad();
+			DestroyDepthCamera();
 		}
 
 		void OnValidate()
@@ -376,17 +378,15 @@ namespace kode80.Clouds
 
 
 			//// DEPTH ////
-			if( _depthCamera == null) {
-				_depthCamera = new GameObject().AddComponent<Camera>();
-				_depthCamera.gameObject.hideFlags = HideFlags.DontSave;
-			}
+
 			_depthCamera.CopyFrom( _camera);
 			_depthCamera.enabled = false;
 			_depthCamera.hdr = false;
-			RenderTexture smallDepthTexture = RenderTexture.GetTemporary( _subFrame.width / 2, 
-																	 _subFrame.height / 2, 
-																	 _subFrame.depth, 
-																	 RenderTextureFormat.R8);
+			int depthDownsample = 4;
+			RenderTexture smallDepthTexture = RenderTexture.GetTemporary( _subFrame.width / depthDownsample, 
+																		  _subFrame.height / depthDownsample, 
+																	 	  _subFrame.depth, 
+																	 	  RenderTextureFormat.R8);
 			
 			_depthCamera.targetTexture = smallDepthTexture;
 			_depthCamera.clearFlags = CameraClearFlags.SolidColor;
@@ -405,9 +405,8 @@ namespace kode80.Clouds
 			smallDepthTexture.filterMode = FilterMode.Point;
 			depthTexture.filterMode = FilterMode.Point;
 
-			Graphics.Blit( smallDepthTexture, depthTexture, _depthMaskDilateMaterial, 0);
-			Graphics.Blit( depthTexture, smallDepthTexture, _depthMaskDilateMaterial, 0);
-
+			Graphics.Blit( smallDepthTexture, depthTexture, _depthMaskDilateMaterial);
+			Graphics.Blit( depthTexture, smallDepthTexture, _depthMaskDilateMaterial);
 			RenderTexture.ReleaseTemporary( depthTexture);
 			depthTexture = smallDepthTexture;
 
@@ -449,7 +448,6 @@ namespace kode80.Clouds
 			
 			RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
 			RenderTexture combined = RenderTexture.GetTemporary( _previousFrame.width, _previousFrame.height, 0, format, RenderTextureReadWrite.Linear);
-			combined.filterMode = FilterMode.Bilinear;
 
 			_cloudCombinerMaterial.SetTexture( "_LinearDepthTex", depthTexture);
 			Graphics.Blit( null, combined, _cloudCombinerMaterial);
@@ -475,6 +473,15 @@ namespace kode80.Clouds
 
             return gradient;
         }
+
+		private void CreateDepthCameraIfNeeded()
+		{
+			if( _depthCamera == null)
+			{
+				_depthCamera = new GameObject().AddComponent<Camera>();
+				_depthCamera.gameObject.hideFlags = HideFlags.DontSave;
+			}
+		}
 
         private void CreateMaterialsIfNeeded()
 		{
@@ -552,6 +559,15 @@ namespace kode80.Clouds
                 _fullScreenQuad.renderWhenPlaying = true;
             }
         }
+
+		void DestroyDepthCamera()
+		{
+			if( _depthCamera)
+			{
+				DestroyImmediate( _depthCamera.gameObject);
+				_depthCamera = null;
+			}
+		}
 
         void DestroyFullscreenQuad()
         {

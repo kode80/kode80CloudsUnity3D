@@ -93,11 +93,25 @@ Shader "Hidden/kode80/CloudCombiner"
 					}
 					else
 					{
-						cloud = tex2D( _PrevFrame, reproj.xy);
+						// We need to use texture filtering when reprojecting otherwise
+						// you end up with noticable pixel-stepping as the camera rotates
+						// due to low resolution...
+						// ...however, with texture filtering turned on it makes it impossible
+						// to detect the hot-pink 'occluded' pixels as they are likely blended
+						// with neighbors. We can mitigate this by doing point sampling of the 
+						// reprojected pixel first and checking that, then using the filtered
+						// version if it's not occluded.
+						// This still results in *some* brief ghost edges... need to find a solution.
+						float2 reproj2 = (floor(reproj.xy * _FrameSize) + 0.5) / _FrameSize;
+						cloud = tex2D( _PrevFrame, reproj2.xy);
+
 						if( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0)
-						//if( cloud.a == 0)
 						{
-							cloud = tex2D( _SubFrame, input.uv);
+							cloud = tex2D( _SubFrame, uv2);
+						}
+						else
+						{
+							cloud = tex2D( _PrevFrame, reproj.xy);
 						}
 					}
 				}
