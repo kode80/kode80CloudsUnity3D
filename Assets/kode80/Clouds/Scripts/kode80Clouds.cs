@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System.Collections;
+using kode80.Utils;
 
 namespace kode80.Clouds
 {
@@ -149,8 +150,7 @@ namespace kode80.Clouds
 
         private RenderTexture _subFrame;
 		private RenderTexture _previousFrame;
-		private RenderTexture _currentFrame;
-		public RenderTexture currentFrame { get { return _currentFrame; } }
+		public RenderTexture currentFrame { get { return _previousFrame; } }
 		
 		private Vector4 _cloudGradientVector1;
 		private Vector4 _cloudGradientVector2;
@@ -402,13 +402,16 @@ namespace kode80.Clouds
 																	 smallDepthTexture.height, 
 																	 smallDepthTexture.depth, 
 																	 smallDepthTexture.format);
+			smallDepthTexture.filterMode = FilterMode.Point;
+			depthTexture.filterMode = FilterMode.Point;
+
 			Graphics.Blit( smallDepthTexture, depthTexture, _depthMaskDilateMaterial, 0);
 			Graphics.Blit( depthTexture, smallDepthTexture, _depthMaskDilateMaterial, 0);
 
 			RenderTexture.ReleaseTemporary( depthTexture);
 			depthTexture = smallDepthTexture;
 
-			depthTexture.filterMode = FilterMode.Point;
+			//GFXDebug.DrawTexture( _camera, depthTexture);
 
 
 			//// DEPTH END ////
@@ -436,7 +439,7 @@ namespace kode80.Clouds
 
 			if( _isFirstFrame)
 			{
-				Graphics.Blit( _subFrame, _currentFrame);
+				Graphics.Blit( _subFrame, _previousFrame);
 				_isFirstFrame = false;
 			}
 			
@@ -450,9 +453,6 @@ namespace kode80.Clouds
 
 			_cloudCombinerMaterial.SetTexture( "_LinearDepthTex", depthTexture);
 			Graphics.Blit( null, combined, _cloudCombinerMaterial);
-
-			_depthMaskDilateMaterial.SetTexture( "_DilatedDepthTex", depthTexture);
-			Graphics.Blit( combined, _currentFrame, _depthMaskDilateMaterial, 1);
 			Graphics.Blit( combined, _previousFrame);
 
 			RenderTexture.active = previousActiveRenderTexture;
@@ -461,7 +461,7 @@ namespace kode80.Clouds
 
 			_cloudsSharedProperties.EndFrame();
 
-			_cloudBlenderMaterial.SetTexture( "_MainTex", _currentFrame);
+			_cloudBlenderMaterial.SetTexture( "_MainTex", currentFrame);
 			_cloudBlenderMaterial.SetInt( "_IsGamma", QualitySettings.activeColorSpace == ColorSpace.Gamma ? 1 : 0);
 		}
         
@@ -636,16 +636,6 @@ namespace kode80.Clouds
 				_previousFrame.hideFlags = HideFlags.HideAndDontSave;
 				_isFirstFrame = true;
 			}
-
-			if( _currentFrame == null && _camera != null)
-			{
-				RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
-				_currentFrame = new RenderTexture( _cloudsSharedProperties.frameWidth, 
-					_cloudsSharedProperties.frameHeight, 0, format, RenderTextureReadWrite.Linear);
-				_currentFrame.filterMode = FilterMode.Bilinear;
-				_currentFrame.hideFlags = HideFlags.HideAndDontSave;
-				_isFirstFrame = true;
-			}
 		}
 
 		private void DestroyRenderTextures()
@@ -655,9 +645,6 @@ namespace kode80.Clouds
 
 			DestroyImmediate( _previousFrame);
 			_previousFrame = null;
-
-			DestroyImmediate( _currentFrame);
-			_currentFrame = null;
 		}
 
         private Light FindDirectionalLightInScene()
