@@ -98,14 +98,35 @@ Shader "Hidden/kode80/CloudCombiner"
 						// due to low resolution...
 						// ...however, with texture filtering turned on it makes it impossible
 						// to detect the hot-pink 'occluded' pixels as they are likely blended
-						// with neighbors. We can mitigate this by doing point sampling of the 
-						// reprojected pixel first and checking that, then using the filtered
-						// version if it's not occluded.
-						// This still results in *some* brief ghost edges... need to find a solution.
+						// with neighbors. We can fix this by doing point sampling of the 
+						// reprojected pixel and it's 4 neighbours (N/S/E/W), if any of these
+						// point sampled pixels are hotpink, then there will be some blended in
+						// with the reprojected pixel, so we should reject and just use the
+						// low rez current frame pixel to fill in. 
+						//
+						// This fixes all edge ghosting caused by occluding geometry when
+						// reprojecting previous frame.
 						float2 reproj2 = (floor(reproj.xy * _FrameSize) + 0.5) / _FrameSize;
-						cloud = tex2D( _PrevFrame, reproj2.xy);
+						float2 pixelSize = 1.0 / _FrameSize;
+						int check = 0;
 
-						if( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0)
+						cloud = tex2D( _PrevFrame, reproj2.xy);
+						check += ( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0);
+
+						cloud = tex2D( _PrevFrame, reproj2.xy + float2( pixelSize.x, 0.0));
+						check += ( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0);
+
+						cloud = tex2D( _PrevFrame, reproj2.xy + float2( -pixelSize.x, 0.0));
+						check += ( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0);
+
+
+						cloud = tex2D( _PrevFrame, reproj2.xy + float2( 0.0, pixelSize.y));
+						check += ( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0);
+
+						cloud = tex2D( _PrevFrame, reproj2.xy + float2( 0.0, -pixelSize.y));
+						check += ( cloud.r == 1 && cloud.g == 0 && cloud.b == 1 && cloud.a == 0);
+
+						if( check > 0)
 						{
 							cloud = tex2D( _SubFrame, uv2);
 						}
