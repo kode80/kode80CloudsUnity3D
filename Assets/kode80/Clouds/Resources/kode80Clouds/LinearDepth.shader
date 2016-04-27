@@ -23,7 +23,11 @@ Shader "Hidden/kode80/LinearDepth"
 	{
 		Pass
 		{
-			Tags { "RenderType"="Opaque" }
+			Tags 
+			{ 
+				"RenderType" = "Opaque" 
+				"ForceNoShadowCasting" = "True"
+			}
 
 			CGPROGRAM
 			#pragma vertex vert
