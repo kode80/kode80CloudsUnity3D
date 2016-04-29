@@ -482,7 +482,8 @@ namespace kode80.Clouds
 			if( _depthCamera == null)
 			{
 				_depthCamera = new GameObject().AddComponent<Camera>();
-				_depthCamera.gameObject.hideFlags = HideFlags.DontSave;
+				_depthCamera.gameObject.hideFlags = HideFlags.HideAndDontSave;
+				_depthCamera.enabled = false;
 			}
 		}
 
