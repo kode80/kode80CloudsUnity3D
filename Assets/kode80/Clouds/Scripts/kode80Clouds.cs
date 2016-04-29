@@ -314,8 +314,10 @@ namespace kode80.Clouds
 			if( theCamera != _camera)
 			{
 				_camera = theCamera;
-				//_camera.depthTextureMode = DepthTextureMode.Depth;
-				_fullScreenQuad.targetCamera = theCamera;
+				if( _fullScreenQuad != null)
+				{
+					_fullScreenQuad.targetCamera = theCamera;
+				}
 			}
 		}
 		
@@ -379,6 +381,7 @@ namespace kode80.Clouds
 
 			//// DEPTH ////
 
+			CreateDepthCameraIfNeeded();
 			_depthCamera.CopyFrom( _camera);
 			_depthCamera.enabled = false;
 			_depthCamera.hdr = false;
