@@ -26,9 +26,7 @@ Shader "Hidden/kode80/CloudBlender"
 		Pass
 		{
 			Cull Off 
-			ZWrite Off
-			Ztest LEqual 
-			//LOD 200
+			Ztest LEqual
 			Blend One OneMinusSrcAlpha
 			
 			CGPROGRAM
@@ -49,13 +47,9 @@ Shader "Hidden/kode80/CloudBlender"
 			v2f vert(appdata_base v)
 			{
 			   	v2f o;
-				o.position = float4(v.vertex.xyz, 1.0);
+				o.position = mul( UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.texcoord;
-
-				if( _ProjectionParams.x < 0) {
-				        o.uv.y = 1-o.uv.y;
-				}
-
+				
 			   	return o;
 			}
 			

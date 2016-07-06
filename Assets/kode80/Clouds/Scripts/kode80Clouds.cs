@@ -247,12 +247,13 @@ namespace kode80.Clouds
 		
 		void Start () 
 		{
-            SetCamera( targetCamera);
-			_cloudsSharedProperties = new Clouds.SharedProperties();
-			UpdateSharedFromPublicProperties();
 			CreateMaterialsIfNeeded();
 			CreateRenderTextures();
-            CreateFullscreenQuad();
+			CreateFullscreenQuad();
+			SetCamera( targetCamera);
+
+			_cloudsSharedProperties = new Clouds.SharedProperties();
+			UpdateSharedFromPublicProperties();
 		}
 
 		void Awake()
@@ -306,6 +307,8 @@ namespace kode80.Clouds
 			{
 				_camera = theCamera;
 				_fullScreenQuad.targetCamera = theCamera;
+				_fullScreenQuad.transform.localPosition = new Vector3( 0, 0, theCamera.farClipPlane - 10.0f);
+				_fullScreenQuad.transform.SetParent( _camera.transform, false);
 			}
 		}
 		
@@ -480,10 +483,13 @@ namespace kode80.Clouds
             if (Application.isPlaying && _fullScreenQuad == null)
             {
                 GameObject quadGO = new GameObject("CloudsFullscreenQuad", typeof(FullScreenQuad));
-                quadGO.hideFlags = HideFlags.HideAndDontSave;
+				quadGO.hideFlags = HideFlags.DontSave;
                 _fullScreenQuad = quadGO.GetComponent<FullScreenQuad>();
                 _fullScreenQuad.material = _cloudBlenderMaterial;
-                _fullScreenQuad.renderWhenPlaying = true;
+
+				if( _camera != null) {
+					_fullScreenQuad.transform.SetParent( _camera.transform, false);
+				}
             }
         }
 
