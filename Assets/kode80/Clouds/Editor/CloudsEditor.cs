@@ -273,9 +273,12 @@ namespace kode80.Clouds
 			quadGO.tag = "EditorOnly";
 			
 			Material material = new Material( Shader.Find( "Hidden/kode80/CloudBlenderEditor"));
-			material.hideFlags = HideFlags.HideAndDontSave;
+			material.hideFlags = HideFlags.DontSave;
 			FullScreenQuad quad = quadGO.GetComponent<FullScreenQuad>();
 			quad.material = material;
+			quad.targetCamera = _cloudsCamera;
+			quad.transform.localPosition = new Vector3( 0, 0, _cloudsCamera.farClipPlane - 10.0f);
+			quad.transform.SetParent( _cloudsCamera.transform, false);
 
 			return quad;
 		}
@@ -329,8 +332,8 @@ namespace kode80.Clouds
 
 			_clouds = GameObject.FindObjectOfType<kode80Clouds>();
 
-			_fullScreenQuad = CreateFullScreenQuad();
 			_cloudsCamera = CreateCloudsCamera();
+			_fullScreenQuad = CreateFullScreenQuad();
             _fullScreenQuad.targetCamera = _cloudsCamera;
 
 			_clouds.SetCamera( _cloudsCamera);

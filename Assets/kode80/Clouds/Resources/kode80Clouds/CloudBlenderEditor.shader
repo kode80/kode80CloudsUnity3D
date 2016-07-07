@@ -53,14 +53,9 @@ Shader "Hidden/kode80/CloudBlenderEditor"
 			
 			clouds_v2f vert(appdata_base v)
 			{
-			   	clouds_v2f o;
-				o.position = float4(v.vertex.xyz, 1.0);
-				o.uv = v.texcoord.xy;
-
-				if( _ProjectionParams.x < 0) {
-				        o.uv.y = 1-o.uv.y;
-				}
-				
+				clouds_v2f o;
+				o.position = mul( UNITY_MATRIX_MVP, v.vertex);
+				o.uv = v.texcoord;
 				o.cameraRay = UVToCameraRay( o.uv);
 				
 			   	return o;

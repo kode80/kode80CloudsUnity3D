@@ -306,9 +306,13 @@ namespace kode80.Clouds
 			if( theCamera != _camera)
 			{
 				_camera = theCamera;
-				_fullScreenQuad.targetCamera = theCamera;
-				_fullScreenQuad.transform.localPosition = new Vector3( 0, 0, theCamera.farClipPlane - 10.0f);
-				_fullScreenQuad.transform.SetParent( _camera.transform, false);
+
+				if( _fullScreenQuad)
+				{
+					_fullScreenQuad.targetCamera = theCamera;
+					_fullScreenQuad.transform.localPosition = new Vector3( 0, 0, theCamera.farClipPlane - 10.0f);
+					_fullScreenQuad.transform.SetParent( _camera.transform, false);
+				}
 			}
 		}
 		
