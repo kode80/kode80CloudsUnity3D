@@ -468,12 +468,12 @@ namespace kode80.Clouds
 			
 			if( _perlin3D == null)
 			{
-				_perlin3D = Load3DTexture( "kode80Clouds/noise", 128, TextureFormat.RGBA32);
+				_perlin3D = Texture3DUtil.Load( "kode80Clouds/noise", 128, TextureFormat.RGBA32);
 			}
 			
 			if( _detail3D == null)
 			{
-				_detail3D = Load3DTexture( "kode80Clouds/noise_detail", 32, TextureFormat.RGB24);
+				_detail3D = Texture3DUtil.Load( "kode80Clouds/noise_detail", 32, TextureFormat.RGB24);
 			}
 
 			if( _curlTexture == null)
@@ -505,32 +505,6 @@ namespace kode80.Clouds
                 _fullScreenQuad = null;
             }
         }
-
-        private Texture3D Load3DTexture( string name, int size, TextureFormat format)
-		{
-			int count = size * size * size;
-			TextAsset asset = Resources.Load<TextAsset>( name);
-			Color32[] colors = new Color32[ count];
-			byte[] bytes = asset.bytes;
-			int j=0;
-			
-			for( int i=0; i<count; i++)
-			{
-				colors[i].r = bytes[j++];
-				colors[i].g = bytes[j++];
-				colors[i].b = bytes[j++];
-				colors[i].a = format == TextureFormat.RGBA32 ? bytes[j++] : (byte)255;
-			}
-			
-			Texture3D texture3D = new Texture3D( size, size, size, format, true);
-			texture3D.hideFlags = HideFlags.HideAndDontSave;
-			texture3D.wrapMode = TextureWrapMode.Repeat;
-			texture3D.filterMode = FilterMode.Bilinear;
-			texture3D.SetPixels32( colors, 0);
-			texture3D.Apply();
-			
-			return texture3D;
-		}
 		
 		private void DestroyMaterials()
 		{
