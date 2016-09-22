@@ -20,7 +20,7 @@ using System.Collections;
 
 #if UNITY_EDITOR
 using UnityEditor;
-	#if UNITY_5_3
+	#if UNITY_5_3 || UNITY_5_3_OR_NEWER
 	using UnityEditor.SceneManagement;
 	#endif
 #endif
@@ -90,7 +90,7 @@ namespace kode80.Clouds
 
 		public void MarkSceneDirty()
 		{
-		#if UNITY_5_3
+		#if UNITY_5_3 || UNITY_5_3_OR_NEWER
 			EditorSceneManager.MarkSceneDirty( EditorSceneManager.GetActiveScene());
 		#else
 			EditorApplication.MarkSceneDirty();
