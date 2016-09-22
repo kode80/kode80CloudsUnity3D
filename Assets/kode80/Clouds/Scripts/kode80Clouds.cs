@@ -23,10 +23,10 @@ namespace kode80.Clouds
 	public class kode80Clouds : MonoBehaviour 
 	{	
 		public enum SubPixelSize {
-			Sub1x1,
-			Sub2x2,
-			Sub4x4,
-			Sub8x8,	
+			Sub1x1 = 1,
+			Sub2x2 = 2,
+			Sub4x4 = 4,
+			Sub8x8 = 8,	
 		}
 
 		public enum RenderSize {
@@ -325,7 +325,7 @@ namespace kode80.Clouds
 			_cloudsSharedProperties.atmosphereStartHeight = atmosphereStartHeight;
 			_cloudsSharedProperties.atmosphereEndHeight = atmosphereEndHeight;
 			_cloudsSharedProperties.cameraPosition = new Vector3( 0.0f, earthRadius, 0.0f);
-			_cloudsSharedProperties.subPixelSize = SubPixelSizeToInt( subPixelSize);
+			_cloudsSharedProperties.subPixelSize = (int)subPixelSize;
 			_cloudsSharedProperties.downsample = downsample;
 			_cloudsSharedProperties.useFixedDimensions = renderSize == RenderSize.FixedDimensions;
 			_cloudsSharedProperties.fixedWidth = fixedWidth;
@@ -338,22 +338,7 @@ namespace kode80.Clouds
 			_cloudGradientVector2 = CloudHeightGradient( cloudGradient2);
 			_cloudGradientVector3 = CloudHeightGradient( cloudGradient3);
 		}
-		
-		private int SubPixelSizeToInt( SubPixelSize size)
-		{
-			int value = 2;
 
-			switch( size)
-			{
-				case SubPixelSize.Sub1x1: value = 1; break;
-				case SubPixelSize.Sub2x2: value = 2; break;
-				case SubPixelSize.Sub4x4: value = 4; break;
-				case SubPixelSize.Sub8x8: value = 8; break;
-			}
-
-			return value;
-		}
-		
 		public void RenderClouds()
 		{	
 			if( _camera == null)
