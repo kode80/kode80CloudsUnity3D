@@ -131,7 +131,6 @@ namespace kode80.Clouds
 		private Material _cloudMaterial;
 		private Material _cloudCombinerMaterial;
 		private Material _cloudBlenderMaterial;
-		private Material _cloudShadowPassMaterial;
 		private Camera _camera;
 		private Texture3D _perlin3D;
 		private Texture3D _detail3D;
@@ -459,13 +458,7 @@ namespace kode80.Clouds
 				_cloudBlenderMaterial = new Material( Shader.Find( "Hidden/kode80/CloudBlender"));
 				_cloudBlenderMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
-			
-			if( _cloudShadowPassMaterial == null)
-			{
-				_cloudShadowPassMaterial = new Material( Shader.Find( "Hidden/kode80/CloudShadowPass"));
-				_cloudShadowPassMaterial.hideFlags = HideFlags.HideAndDontSave;
-			}
-			
+
 			if( _perlin3D == null)
 			{
 				_perlin3D = Texture3DUtil.Load( "kode80Clouds/noise", 128, TextureFormat.RGBA32);
@@ -516,10 +509,7 @@ namespace kode80.Clouds
 			
 			DestroyImmediate( _cloudBlenderMaterial);
 			_cloudBlenderMaterial = null;
-			
-			DestroyImmediate( _cloudShadowPassMaterial);
-			_cloudShadowPassMaterial = null;
-			
+
 			DestroyImmediate( _perlin3D);
 			_perlin3D = null;
 
