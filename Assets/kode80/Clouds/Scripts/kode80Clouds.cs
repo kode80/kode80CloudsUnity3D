@@ -524,23 +524,24 @@ namespace kode80.Clouds
 		{
 			if( _subFrame == null && _camera != null)
 			{
-				RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
-				_subFrame = new RenderTexture( _cloudsSharedProperties.subFrameWidth, 
-					_cloudsSharedProperties.subFrameHeight, 0, format, RenderTextureReadWrite.Linear);
-				_subFrame.filterMode = FilterMode.Bilinear;
-				_subFrame.hideFlags = HideFlags.HideAndDontSave;
+				_subFrame = CreateRenderTexture( _cloudsSharedProperties.subFrameWidth, _cloudsSharedProperties.subFrameHeight);
 				_isFirstFrame = true;
 			}
 			
 			if( _previousFrame == null && _camera != null)
 			{
-				RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
-				_previousFrame = new RenderTexture( _cloudsSharedProperties.frameWidth, 
-					_cloudsSharedProperties.frameHeight, 0, format, RenderTextureReadWrite.Linear);
-				_previousFrame.filterMode = FilterMode.Bilinear;
-				_previousFrame.hideFlags = HideFlags.HideAndDontSave;
+				_previousFrame = CreateRenderTexture( _cloudsSharedProperties.frameWidth, _cloudsSharedProperties.frameHeight);
 				_isFirstFrame = true;
 			}
+		}
+
+		private RenderTexture CreateRenderTexture( int width, int height)
+		{
+			RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+			var texture = new RenderTexture( width, height, 0, format, RenderTextureReadWrite.Linear);
+			texture.filterMode = FilterMode.Bilinear;
+			texture.hideFlags = HideFlags.HideAndDontSave;
+			return texture;
 		}
 
 		private void DestroyRenderTextures()
