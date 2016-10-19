@@ -31,7 +31,6 @@ namespace kode80.Clouds
 		public void ExportCubemap( kode80Clouds clouds, FullScreenQuad fullScreenQuad, Camera targetCamera)
 		{
 			_clouds = clouds;
-			_fullScreenQuad = fullScreenQuad;
 
 			kode80Clouds.SubPixelSize oldSubPixelSize = _clouds.subPixelSize;
 			int oldDownsample = _clouds.downsample;
@@ -45,21 +44,22 @@ namespace kode80.Clouds
             cmGO.hideFlags = HideFlags.HideAndDontSave;
             _camera = cmGO.GetComponent<Camera>();
             _camera.targetTexture = null;
+			_fullScreenQuad = cmGO.GetComponentInChildren<FullScreenQuad>();
+			_fullScreenQuad.targetCamera = _camera;
 
-            _fullScreenQuad.enabled = true;
-			
-			Cubemap cm = new Cubemap( 2048, TextureFormat.RGB24, false);
-			Camera.onPreRender += OnPreRender;
+			fullScreenQuad.gameObject.SetActive(false);
+
+			Cubemap cm = new Cubemap( 2048, TextureFormat.RGB24, true);
+			Camera.onPreCull += OnPreCull;
 			_camera.RenderToCubemap( cm);
-			
-			Camera.onPreRender -= OnPreRender;
-			_fullScreenQuad.enabled = false;
+			Camera.onPreCull -= OnPreCull;
 			UnityEngine.Object.DestroyImmediate( cmGO);
 
             SaveCubeMap( cm, "Assets/kode80Clouds.cubemap");
             //SaveCubeMapFaces(cm, "Assets/kode80Clouds");
 			
-			
+			fullScreenQuad.gameObject.SetActive(true);
+
 			_clouds.subPixelSize = oldSubPixelSize;
 			_clouds.downsample = oldDownsample;
 			_clouds.UpdateSharedFromPublicProperties();
@@ -69,10 +69,20 @@ namespace kode80.Clouds
 			_fullScreenQuad = null;
 		}
 
-		private void OnPreRender( Camera theCamera)
+		private void OnPreCull( Camera theCamera)
 		{
 			if( theCamera == _camera)
 			{
+				_fullScreenQuad.transform.localRotation = Quaternion.identity;
+				_fullScreenQuad.transform.localPosition = Vector3.zero;
+				_fullScreenQuad.GenerateMesh( theCamera, theCamera.farClipPlane - 10.0f);
+
+				var rotation = Quaternion.LookRotation(
+					-theCamera.cameraToWorldMatrix.MultiplyVector( Vector3.forward),
+					theCamera.cameraToWorldMatrix.MultiplyVector( Vector3.up));
+				_fullScreenQuad.transform.rotation = rotation;
+				_fullScreenQuad.transform.localScale = new Vector3( -1, 1, 1);
+
 				_clouds.SetCamera( _camera);
 				_clouds.RenderClouds();
 

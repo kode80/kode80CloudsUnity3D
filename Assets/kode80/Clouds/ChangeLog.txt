@@ -1,6 +1,11 @@
 kode80 Clouds ChangeLog
 ---------------------
 
+kode80 Clouds 1.2.0
+* Fixed stereo rendering in Unity 5.4
+* Fixed cubemap rendering in Unity 5.4
+* General code cleanup and bug fixes
+
 kode80 Clouds 1.1.2 (...)
 * Fixed clouds not appearing in certain multi camera scenes
 

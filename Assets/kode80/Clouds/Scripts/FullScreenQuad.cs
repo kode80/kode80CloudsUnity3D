@@ -29,34 +29,36 @@ namespace kode80.Clouds
 		private MeshRenderer _meshRenderer;
 
 
-		void Start ()
+		void Awake()
 		{
 			targetCamera = targetCamera == null ? Camera.main : targetCamera;
-			_meshFilter = gameObject.AddComponent<MeshFilter>();
-			_meshRenderer = gameObject.AddComponent<MeshRenderer>();
+			_meshFilter = GetOrAddComponent<MeshFilter>(gameObject);
+			_meshRenderer = GetOrAddComponent<MeshRenderer>(gameObject);
 
-			GenerateMesh();
+			GenerateMesh(targetCamera);
 		}
 
 		void Update()
 		{
-			GenerateMesh();
+			GenerateMesh(targetCamera);
 		}
 
-		void GenerateMesh()
+		public void GenerateMesh( Camera targetCamera, float localZOffset = 0.0f)
 		{
-			float width = VRSettings.enabled ? VRSettings.eyeTextureWidth : targetCamera.pixelWidth;
-			float height = VRSettings.enabled ? VRSettings.eyeTextureHeight : targetCamera.pixelHeight;
+			bool isVR = VRSettings.enabled && targetCamera.stereoTargetEye != StereoTargetEyeMask.None;
+			float width = isVR ? VRSettings.eyeTextureWidth : targetCamera.pixelWidth;
+			float height = isVR ? VRSettings.eyeTextureHeight : targetCamera.pixelHeight;
 
 			float aspect = width / height;
-			float fov = Camera.main.fieldOfView * Mathf.Deg2Rad;
-			float h = (transform.localPosition.z * 2.0f * Mathf.Tan(fov / 2.0f)) / 2.0f;
+			float fov = targetCamera.fieldOfView * Mathf.Deg2Rad;
+			float localZ = transform.localPosition.z + localZOffset;
+			float h = (localZ * 2.0f * Mathf.Tan(fov / 2.0f)) / 2.0f;
 			float w = h * aspect;
 
 			w *= horizontalScale;
 			h *= verticalScale;
 
-			float z = 0.0f;
+			float z = localZOffset;
 			Vector3 v0 = new Vector3(-w, -h, z);
 			Vector3 v1 = new Vector3(w, -h, z);
 			Vector3 v2 = new Vector3(w, h, z);
@@ -73,9 +75,21 @@ namespace kode80.Clouds
 			mesh.triangles = new int[] { 0, 1, 2,
 				2, 3, 0};
 			mesh.RecalculateBounds();
+			mesh.UploadMeshData( true);
 
-			_meshFilter.mesh = mesh;
+			_meshFilter.sharedMesh = mesh;
 			_meshRenderer.sharedMaterial = material;
+		}
+
+		private T GetOrAddComponent<T>( GameObject gameObject) where T : Component
+		{
+			var component = gameObject.GetComponent<T>();
+
+			if( component == null) {
+				component = gameObject.AddComponent<T>();
+			}
+
+			return component;
 		}
 	}
 }
