@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -49,7 +49,7 @@ namespace kode80.Clouds
 			TimeOfDayKeyFrame keyFrameA = KeyFrameBelowAngle( angle);
 			TimeOfDayKeyFrame keyFrameB = KeyFrameAboveAngle( angle);
 			float delta = keyFrameB.angle - keyFrameA.angle;
-			float alpha = delta == 0.0f ? 0.5f : (angle - keyFrameA.angle) / delta;
+			float alpha = Mathf.Approximately(delta, 0.0f) ? 0.5f : (angle - keyFrameA.angle) / delta;
 
 			UnityEngine.RenderSettings.fogColor = Color.Lerp( keyFrameA.fogColor, keyFrameB.fogColor, alpha);
 
@@ -66,9 +66,9 @@ namespace kode80.Clouds
 
 			if( proceduralSkybox)
 			{
-				proceduralSkybox.SetFloat( "_SunSize", Mathf.Lerp( keyFrameA.sunSize, 
+				proceduralSkybox.SetFloat(Uniforms._SunSize, Mathf.Lerp( keyFrameA.sunSize, 
 				                                                   keyFrameB.sunSize, alpha));
-				proceduralSkybox.SetFloat( "_AtmosphereThickness", Mathf.Lerp( keyFrameA.atmosphereThickness, 
+				proceduralSkybox.SetFloat(Uniforms._AtmosphereThickness, Mathf.Lerp( keyFrameA.atmosphereThickness, 
 				                                                               keyFrameB.atmosphereThickness, alpha));
 			}
 		}

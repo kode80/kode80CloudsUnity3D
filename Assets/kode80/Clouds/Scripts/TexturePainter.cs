@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -60,18 +60,18 @@ namespace kode80.Clouds
 			float w = radius;
 			float z = 0.0f;
 
-			_material.SetTexture( "_MainTex", target);
-			_material.SetFloat( "_CoverageOpacity", coverageOpacity);
-			_material.SetFloat( "_TypeOpacity", typeOpacity);
-			_material.SetFloat( "_ShouldDrawCoverage", drawCoverage ? 1.0f : 0.0f);
-			_material.SetFloat( "_ShouldDrawType", drawType ? 1.0f : 0.0f);
-			_material.SetFloat( "_ShouldBlendValues", blendValues ? 1.0f : 0.0f);
+			_material.SetTexture(Uniforms._MainTex, target);
+			_material.SetFloat(Uniforms._CoverageOpacity, coverageOpacity);
+			_material.SetFloat(Uniforms._TypeOpacity, typeOpacity);
+			_material.SetFloat(Uniforms._ShouldDrawCoverage, drawCoverage ? 1.0f : 0.0f);
+			_material.SetFloat(Uniforms._ShouldDrawType, drawType ? 1.0f : 0.0f);
+			_material.SetFloat(Uniforms._ShouldBlendValues, blendValues ? 1.0f : 0.0f);
 
 			if( brushTexture != null)
 			{
-				_material.SetTexture( "_BrushTexture", brushTexture);
+				_material.SetTexture(Uniforms._BrushTexture, brushTexture);
 			}
-			_material.SetFloat( "_BrushTextureAlpha", brushTexture == null ? 0.0f : 1.0f);
+			_material.SetFloat(Uniforms._BrushTextureAlpha, brushTexture == null ? 0.0f : 1.0f);
 
 			GL.PushMatrix();
 			_material.SetPass( 0);
