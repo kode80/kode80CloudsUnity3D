@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -27,13 +27,23 @@ namespace kode80.Clouds
 		public Material material;
 		private MeshFilter _meshFilter;
 		private MeshRenderer _meshRenderer;
-
+		private Mesh _mesh;
+		private readonly Vector3[] _vertices = new Vector3[4];
+		private readonly Vector2[] _uvs = new [] { Vector2.zero, Vector2.right, Vector2.one, Vector2.up };
+		private readonly int[] _triangles = new [] { 0, 1, 2, 2, 3, 0};
 
 		void Awake()
 		{
 			targetCamera = targetCamera == null ? Camera.main : targetCamera;
 			_meshFilter = GetOrAddComponent<MeshFilter>(gameObject);
 			_meshRenderer = GetOrAddComponent<MeshRenderer>(gameObject);
+
+			_mesh = new Mesh();
+			_mesh.name = "Cloud Quad";
+			_mesh.MarkDynamic();
+			_mesh.vertices = _vertices;
+			_mesh.uv = _uvs;
+			_mesh.triangles = _triangles;
 
 			GenerateMesh(targetCamera);
 		}
@@ -59,25 +69,16 @@ namespace kode80.Clouds
 			h *= verticalScale;
 
 			float z = localZOffset;
-			Vector3 v0 = new Vector3(-w, -h, z);
-			Vector3 v1 = new Vector3(w, -h, z);
-			Vector3 v2 = new Vector3(w, h, z);
-			Vector3 v3 = new Vector3(-w, h, z);
+			_vertices[0] = new Vector3(-w, -h, z);
+			_vertices[1] = new Vector3(w, -h, z);
+			_vertices[2] = new Vector3(w, h, z);
+			_vertices[3] = new Vector3(-w, h, z);
 
-			Vector2 uv0 = new Vector2(0.0f, 0.0f);
-			Vector2 uv1 = new Vector2(1.0f, 0.0f);
-			Vector2 uv2 = new Vector2(1.0f, 1.0f);
-			Vector2 uv3 = new Vector2(0.0f, 1.0f);
+			_mesh.vertices = _vertices;
+			_mesh.RecalculateBounds();
+			_mesh.UploadMeshData(false);
 
-			Mesh mesh = new Mesh();
-			mesh.vertices = new Vector3[] { v0, v1, v2, v3 };
-			mesh.uv = new Vector2[] { uv0, uv1, uv2, uv3 };
-			mesh.triangles = new int[] { 0, 1, 2,
-				2, 3, 0};
-			mesh.RecalculateBounds();
-			mesh.UploadMeshData( true);
-
-			_meshFilter.sharedMesh = mesh;
+			_meshFilter.sharedMesh = _mesh;
 			_meshRenderer.sharedMaterial = material;
 		}
 
