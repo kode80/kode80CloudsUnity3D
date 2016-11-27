@@ -263,9 +263,10 @@ namespace kode80.Clouds
         
 		public void UpdateAnimatedProperties()
 		{
+			_coverageOffset = new Vector2(coverageOffsetX, coverageOffsetY) + coverageOffsetPerFrame * animationScale * Time.realtimeSinceStartup;
+
 			if( animationScale != 0.0f)
 			{
-				_coverageOffset = new Vector2(coverageOffsetX, coverageOffsetY) + coverageOffsetPerFrame * animationScale * Time.realtimeSinceStartup;
 				_baseOffset += baseOffsetPerFrame * animationScale;
 				_detailOffset += detailOffsetPerFrame * animationScale;
 			}
