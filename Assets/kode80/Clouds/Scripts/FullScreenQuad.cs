@@ -35,6 +35,12 @@ namespace kode80.Clouds
 			_meshFilter = GetOrAddComponent<MeshFilter>(gameObject);
 			_meshRenderer = GetOrAddComponent<MeshRenderer>(gameObject);
 
+			if(VRSettings.enabled && VRSettings.loadedDeviceName == "OpenVR")
+			{
+				horizontalScale = 1.059739f;
+				verticalScale = 0.9982163f;
+			}
+
 			GenerateMesh(targetCamera);
 		}
 
