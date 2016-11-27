@@ -218,8 +218,6 @@ namespace kode80.Clouds
 				_cloudsSharedProperties = new Clouds.SharedProperties();
 			}
 
-            _coverageOffset.Set(coverageOffsetX, coverageOffsetY);
-
             UpdateGradientVectors();
 			UpdateSharedFromPublicProperties();
 
@@ -258,7 +256,7 @@ namespace kode80.Clouds
 		void Awake()
 		{
 			UpdateGradientVectors();
-			
+
 			_cloudsSharedProperties = new Clouds.SharedProperties();
 			UpdateSharedFromPublicProperties();
 		}
@@ -267,7 +265,7 @@ namespace kode80.Clouds
 		{
 			if( animationScale != 0.0f)
 			{
-                _coverageOffset += coverageOffsetPerFrame * animationScale;
+				_coverageOffset = new Vector2(coverageOffsetX, coverageOffsetY) + coverageOffsetPerFrame * animationScale * Time.realtimeSinceStartup;
 				_baseOffset += baseOffsetPerFrame * animationScale;
 				_detailOffset += detailOffsetPerFrame * animationScale;
 			}
@@ -319,8 +317,6 @@ namespace kode80.Clouds
 		{
 			float earthRadius = _cloudsSharedProperties.CalculatePlanetRadius( atmosphereStartHeight, horizonDistance);
 
-            _coverageOffset.Set(coverageOffsetX, coverageOffsetY);
-            
             _cloudsSharedProperties.earthRadius = earthRadius;
 			_cloudsSharedProperties.atmosphereStartHeight = atmosphereStartHeight;
 			_cloudsSharedProperties.atmosphereEndHeight = atmosphereEndHeight;
