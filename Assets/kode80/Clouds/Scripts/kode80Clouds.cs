@@ -378,8 +378,8 @@ namespace kode80.Clouds
 				_isFirstFrame = false;
 			}
 			
-			_cloudCombinerMaterial.SetTexture( "_SubFrame", _subFrame);
-			_cloudCombinerMaterial.SetTexture( "_PrevFrame", _previousFrame);
+			_cloudCombinerMaterial.SetTexture(Uniforms._SubFrame, _subFrame);
+			_cloudCombinerMaterial.SetTexture(Uniforms._PrevFrame, _previousFrame);
 			_cloudsSharedProperties.ApplyToMaterial( _cloudCombinerMaterial);
 			
 			RenderTextureFormat format = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
@@ -395,8 +395,8 @@ namespace kode80.Clouds
 
 			_cloudsSharedProperties.EndFrame();
 
-			_cloudBlenderMaterial.SetTexture( "_MainTex", currentFrame);
-			_cloudBlenderMaterial.SetInt( "_IsGamma", QualitySettings.activeColorSpace == ColorSpace.Gamma ? 1 : 0);
+			_cloudBlenderMaterial.SetTexture(Uniforms._MainTex, currentFrame);
+			_cloudBlenderMaterial.SetInt(Uniforms._IsGamma, QualitySettings.activeColorSpace == ColorSpace.Gamma ? 1 : 0);
 		}
         
         private Gradient CreateCloudGradient( float position0, float position1, float position2, float position3)
@@ -553,62 +553,61 @@ namespace kode80.Clouds
 			{
 				Vector3 lightDirection = sunLight.transform.forward;
 
-				_cloudMaterial.SetFloat( "_CloudBottomFade", cloudBottomFade);
+				_cloudMaterial.SetFloat(Uniforms._CloudBottomFade, cloudBottomFade);
 
-				_cloudMaterial.SetFloat( "_MaxIterations", maxIterations);
-				_cloudMaterial.SetFloat( "_SampleScalar", sampleScalar);
-				_cloudMaterial.SetFloat( "_SampleThreshold", sampleThreshold);
-				_cloudMaterial.SetFloat( "_LODDistance", lodDistance);
-                _cloudMaterial.SetFloat("_RayMinimumY", horizonLevel);
-                _cloudMaterial.SetFloat( "_DetailScale", detailScale);
-				_cloudMaterial.SetFloat( "_ErosionEdgeSize", erosionEdgeSize);
-				_cloudMaterial.SetFloat( "_CloudDistortion", cloudDistortion);
-				_cloudMaterial.SetFloat( "_CloudDistortionScale", cloudDistortionScale);
-				_cloudMaterial.SetFloat( "_HorizonFadeScalar", horizonFade);
-                _cloudMaterial.SetFloat("_HorizonFadeStartAlpha", horizonFadeStartAlpha);
-                _cloudMaterial.SetFloat("_OneMinusHorizonFadeStartAlpha", 1.0f - horizonFadeStartAlpha);
-                _cloudMaterial.SetTexture( "_Perlin3D", _perlin3D);
-				_cloudMaterial.SetTexture( "_Detail3D", _detail3D);
-				_cloudMaterial.SetVector( "_BaseOffset", _baseOffset);
-				_cloudMaterial.SetVector( "_DetailOffset", _detailOffset);
-				_cloudMaterial.SetFloat( "_BaseScale", 1.0f / atmosphereEndHeight * baseScale);
-				_cloudMaterial.SetFloat( "_LightScalar", sunScalar);
-				_cloudMaterial.SetFloat( "_AmbientScalar", ambientScalar);
-				_cloudMaterial.SetVector( "_CloudHeightGradient1", _cloudGradientVector1);
-				_cloudMaterial.SetVector( "_CloudHeightGradient2", _cloudGradientVector2);
-				_cloudMaterial.SetVector( "_CloudHeightGradient3", _cloudGradientVector3);
-				_cloudMaterial.SetTexture( "_Coverage", cloudCoverage);
-				_cloudMaterial.SetVector( "_LightDirection", lightDirection);
+				_cloudMaterial.SetFloat(Uniforms._MaxIterations, maxIterations);
+				_cloudMaterial.SetFloat(Uniforms._SampleScalar, sampleScalar);
+				_cloudMaterial.SetFloat(Uniforms._SampleThreshold, sampleThreshold);
+				_cloudMaterial.SetFloat(Uniforms._LODDistance, lodDistance);
+				_cloudMaterial.SetFloat(Uniforms._RayMinimumY, horizonLevel);
+				_cloudMaterial.SetFloat(Uniforms._DetailScale, detailScale);
+				_cloudMaterial.SetFloat(Uniforms._ErosionEdgeSize, erosionEdgeSize);
+				_cloudMaterial.SetFloat(Uniforms._CloudDistortion, cloudDistortion);
+				_cloudMaterial.SetFloat(Uniforms._CloudDistortionScale, cloudDistortionScale);
+				_cloudMaterial.SetFloat(Uniforms._HorizonFadeScalar, horizonFade);
+				_cloudMaterial.SetFloat(Uniforms._HorizonFadeStartAlpha, horizonFadeStartAlpha);
+				_cloudMaterial.SetFloat(Uniforms._OneMinusHorizonFadeStartAlpha, 1.0f - horizonFadeStartAlpha);
+				_cloudMaterial.SetTexture(Uniforms._Perlin3D, _perlin3D);
+				_cloudMaterial.SetTexture(Uniforms._Detail3D, _detail3D);
+				_cloudMaterial.SetVector(Uniforms._BaseOffset, _baseOffset);
+				_cloudMaterial.SetVector(Uniforms._DetailOffset, _detailOffset);
+				_cloudMaterial.SetFloat(Uniforms._BaseScale, 1.0f / atmosphereEndHeight * baseScale);
+				_cloudMaterial.SetFloat(Uniforms._LightScalar, sunScalar);
+				_cloudMaterial.SetFloat(Uniforms._AmbientScalar, ambientScalar);
+				_cloudMaterial.SetVector(Uniforms._CloudHeightGradient1, _cloudGradientVector1);
+				_cloudMaterial.SetVector(Uniforms._CloudHeightGradient2, _cloudGradientVector2);
+				_cloudMaterial.SetVector(Uniforms._CloudHeightGradient3, _cloudGradientVector3);
+				_cloudMaterial.SetTexture(Uniforms._Coverage, cloudCoverage);
+				_cloudMaterial.SetVector(Uniforms._LightDirection, lightDirection);
 
-				_cloudMaterial.SetColor( "_LightColor", sunLight.color);
-				_cloudMaterial.SetColor( "_CloudBaseColor", cloudBaseColor);
-				_cloudMaterial.SetColor( "_CloudTopColor", cloudTopColor);
+				_cloudMaterial.SetColor(Uniforms._LightColor, sunLight.color);
+				_cloudMaterial.SetColor(Uniforms._CloudBaseColor, cloudBaseColor);
+				_cloudMaterial.SetColor(Uniforms._CloudTopColor, cloudTopColor);
 
-				_cloudMaterial.SetFloat( "_HorizonCoverageStart", horizonCoverageStart);
-				_cloudMaterial.SetFloat( "_HorizonCoverageEnd", horizonCoverageEnd);
+				_cloudMaterial.SetFloat(Uniforms._HorizonCoverageStart, horizonCoverageStart);
+				_cloudMaterial.SetFloat(Uniforms._HorizonCoverageEnd, horizonCoverageEnd);
 
-					
-				_cloudMaterial.SetFloat( "_Density", density);
-				_cloudMaterial.SetFloat( "_ForwardScatteringG", forwardScatteringG);
-				_cloudMaterial.SetFloat( "_BackwardScatteringG", backwardScatteringG);
-				_cloudMaterial.SetFloat( "_DarkOutlineScalar", darkOutlineScalar);
+				_cloudMaterial.SetFloat(Uniforms._Density, density);
+				_cloudMaterial.SetFloat(Uniforms._ForwardScatteringG, forwardScatteringG);
+				_cloudMaterial.SetFloat(Uniforms._BackwardScatteringG, backwardScatteringG);
+				_cloudMaterial.SetFloat(Uniforms._DarkOutlineScalar, darkOutlineScalar);
 
-                float atmosphereThickness = atmosphereEndHeight - atmosphereStartHeight;
-                _cloudMaterial.SetFloat( "_SunRayLength", sunRayLength * atmosphereThickness);
-				_cloudMaterial.SetFloat( "_ConeRadius", coneRadius * atmosphereThickness);
-                _cloudMaterial.SetFloat( "_RayStepLength", atmosphereThickness / Mathf.Floor(maxIterations / 2.0f));
+				float atmosphereThickness = atmosphereEndHeight - atmosphereStartHeight;
+				_cloudMaterial.SetFloat(Uniforms._SunRayLength, sunRayLength * atmosphereThickness);
+				_cloudMaterial.SetFloat(Uniforms._ConeRadius, coneRadius * atmosphereThickness);
+				_cloudMaterial.SetFloat(Uniforms._RayStepLength, atmosphereThickness / Mathf.Floor(maxIterations / 2.0f));
 
-                _cloudMaterial.SetTexture( "_Curl2D", _curlTexture);
-				_cloudMaterial.SetFloat( "_CoverageScale", 1.0f / _cloudsSharedProperties.maxDistance);
-				_cloudMaterial.SetVector( "_CoverageOffset", _coverageOffset);
-				_cloudMaterial.SetFloat( "_MaxRayDistance", _cloudsSharedProperties.maxRayDistance);
-                
-				_cloudMaterial.SetVector( "_Random0", _randomVectors[0]);
-				_cloudMaterial.SetVector( "_Random1", _randomVectors[1]);
-				_cloudMaterial.SetVector( "_Random2", _randomVectors[2]);
-				_cloudMaterial.SetVector( "_Random3", _randomVectors[3]);
-				_cloudMaterial.SetVector( "_Random4", _randomVectors[4]);
-				_cloudMaterial.SetVector( "_Random5", _randomVectors[5]);
+				_cloudMaterial.SetTexture(Uniforms._Curl2D, _curlTexture);
+				_cloudMaterial.SetFloat(Uniforms._CoverageScale, 1.0f / _cloudsSharedProperties.maxDistance);
+				_cloudMaterial.SetVector(Uniforms._CoverageOffset, _coverageOffset);
+				_cloudMaterial.SetFloat(Uniforms._MaxRayDistance, _cloudsSharedProperties.maxRayDistance);
+
+				_cloudMaterial.SetVector(Uniforms._Random0, _randomVectors[0]);
+				_cloudMaterial.SetVector(Uniforms._Random1, _randomVectors[1]);
+				_cloudMaterial.SetVector(Uniforms._Random2, _randomVectors[2]);
+				_cloudMaterial.SetVector(Uniforms._Random3, _randomVectors[3]);
+				_cloudMaterial.SetVector(Uniforms._Random4, _randomVectors[4]);
+				_cloudMaterial.SetVector(Uniforms._Random5, _randomVectors[5]);
 			}
 		}
 

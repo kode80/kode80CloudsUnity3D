@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -141,24 +141,24 @@ namespace kode80.Clouds
 			Matrix4x4 inverseProjection = projection.inverse;
 			if( jitterProjection) { inverseProjection *= jitter; }
 
-			material.SetFloat( "_EarthRadius", earthRadius);
-			material.SetFloat( "_StartHeight", atmosphereStartHeight);
-			material.SetFloat( "_EndHeight", atmosphereEndHeight);
-			material.SetFloat( "_AtmosphereThickness", atmosphereEndHeight - atmosphereStartHeight);
-			material.SetVector( "_CameraPosition", cameraPosition);
-			material.SetFloat( "_MaxDistance", maxDistance);
-			material.SetMatrix( "_PreviousProjection", previousProjection);
-			material.SetMatrix( "_PreviousInverseProjection", previousProjection.inverse);
-			material.SetMatrix( "_PreviousRotation", previousRotation);
-			material.SetMatrix( "_PreviousInverseRotation", previousInverseRotation);
-			material.SetMatrix( "_Projection", projection);
-			material.SetMatrix( "_InverseProjection", inverseProjection);
-			material.SetMatrix( "_Rotation", rotation);
-			material.SetMatrix( "_InverseRotation", inverseRotation);
-			material.SetFloat( "_SubFrameNumber", subFrameNumber);
-			material.SetFloat( "_SubPixelSize", subPixelSize);
-			material.SetVector( "_SubFrameSize", new Vector2( _subFrameWidth, _subFrameHeight));
-			material.SetVector( "_FrameSize", new Vector2( _frameWidth, _frameHeight));
+			material.SetFloat(Uniforms._EarthRadius, earthRadius);
+			material.SetFloat(Uniforms._StartHeight, atmosphereStartHeight);
+			material.SetFloat(Uniforms._EndHeight, atmosphereEndHeight);
+			material.SetFloat(Uniforms._AtmosphereThickness, atmosphereEndHeight - atmosphereStartHeight);
+			material.SetVector(Uniforms._CameraPosition, cameraPosition);
+			material.SetFloat(Uniforms._MaxDistance, maxDistance);
+			material.SetMatrix(Uniforms._PreviousProjection, previousProjection);
+			material.SetMatrix(Uniforms._PreviousInverseProjection, previousProjection.inverse);
+			material.SetMatrix(Uniforms._PreviousRotation, previousRotation);
+			material.SetMatrix(Uniforms._PreviousInverseRotation, previousInverseRotation);
+			material.SetMatrix(Uniforms._Projection, projection);
+			material.SetMatrix(Uniforms._InverseProjection, inverseProjection);
+			material.SetMatrix(Uniforms._Rotation, rotation);
+			material.SetMatrix(Uniforms._InverseRotation, inverseRotation);
+			material.SetFloat(Uniforms._SubFrameNumber, subFrameNumber);
+			material.SetFloat(Uniforms._SubPixelSize, subPixelSize);
+			material.SetVector(Uniforms._SubFrameSize, new Vector2( _subFrameWidth, _subFrameHeight));
+			material.SetVector(Uniforms._FrameSize, new Vector2( _frameWidth, _frameHeight));
 		}
 		
 		public Vector3 NormalizedPointToAtmosphere( Vector2 point, Camera theCamera)

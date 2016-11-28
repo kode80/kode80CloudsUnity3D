@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -15,7 +15,6 @@
 
 using UnityEngine;
 using UnityEngine.Rendering;
-using System.Collections;
 
 namespace kode80.Clouds
 {
@@ -27,11 +26,6 @@ namespace kode80.Clouds
         private Light _light;
         private CommandBuffer _commandBuffer;
         private Material _material;
-
-        void Start()
-        {
-
-        }
         
         void ShadowsPreCull( Camera camera)
         {
@@ -42,14 +36,14 @@ namespace kode80.Clouds
         {
             if( clouds == null || _light == null) { return; }
 
-            _material.SetTexture("_CloudCoverage", clouds.cloudCoverage);
-            _material.SetMatrix("_InvCamera", clouds.targetCamera.cameraToWorldMatrix);
-            _material.SetMatrix("_InvProjection", clouds.targetCamera.projectionMatrix.inverse);
-            _material.SetVector("_Offset", Vector3.zero);
-            _material.SetFloat("_CoverageScale", 1.0f / clouds.cloudsSharedProperties.maxDistance);
-            _material.SetVector("_CoverageOffset", clouds.coverageOffset);
-            _material.SetVector("_LightDirection", clouds.sunLight.transform.forward);
-            _material.SetFloat("_ShadowStrength", _light.shadowStrength);
+            _material.SetTexture(Uniforms._CloudCoverage, clouds.cloudCoverage);
+            _material.SetMatrix(Uniforms._InvCamera, clouds.targetCamera.cameraToWorldMatrix);
+            _material.SetMatrix(Uniforms._InvProjection, clouds.targetCamera.projectionMatrix.inverse);
+            _material.SetVector(Uniforms._Offset, Vector3.zero);
+            _material.SetFloat(Uniforms._CoverageScale, 1.0f / clouds.cloudsSharedProperties.maxDistance);
+            _material.SetVector(Uniforms._CoverageOffset, clouds.coverageOffset);
+            _material.SetVector(Uniforms._LightDirection, clouds.sunLight.transform.forward);
+            _material.SetFloat(Uniforms._ShadowStrength, _light.shadowStrength);
             clouds.cloudsSharedProperties.ApplyToMaterial(_material);
         }
 

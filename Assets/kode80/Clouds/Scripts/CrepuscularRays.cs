@@ -1,4 +1,4 @@
-﻿//***************************************************
+//***************************************************
 //
 //  Author: Ben Hopkins
 //  Copyright (C) 2016 kode80 LLC, 
@@ -14,7 +14,6 @@
 //***************************************************
 
 using UnityEngine;
-using System.Collections;
 
 namespace kode80.Clouds
 {
@@ -22,18 +21,17 @@ namespace kode80.Clouds
 	public class CrepuscularRays : MonoBehaviour 
 	{
 		public kode80Clouds clouds;
-        public float sampleCount = 20.0f;
-        [Range( 0.0f, 1.0f)]
-        public float density = 0.813f;
-        [Range(0.0f, 1.0f)]
-        public float decay = 1.0f;
-        [Range(0.0f, 1.0f)]
-        public float weight = 1.0f;
-        public float exposure = 3.0f;
+		public float sampleCount = 20.0f;
+		[Range( 0.0f, 1.0f)]
+		public float density = 0.813f;
+		[Range(0.0f, 1.0f)]
+		public float decay = 1.0f;
+		[Range(0.0f, 1.0f)]
+		public float weight = 1.0f;
+		public float exposure = 3.0f;
 
-        private Material _material;
+		private Material _material;
 
-		
 		void OnEnable()
 		{
 			CreateMaterialsIfNeeded();
@@ -52,20 +50,15 @@ namespace kode80.Clouds
 		void Start () 
 		{
 			CreateMaterialsIfNeeded();
-            clouds = GameObject.FindObjectOfType<kode80Clouds>();
-		}
-		
-		// Update is called once per frame
-		void Update () {
-		
+			clouds = GameObject.FindObjectOfType<kode80Clouds>();
 		}
 
 		public void OnRenderImage( RenderTexture src, RenderTexture dst)
 		{
-            if( clouds == null) {
-                Graphics.Blit(src, dst);
-                return;
-            }
+			if( clouds == null) {
+				Graphics.Blit(src, dst);
+				return;
+			}
 
 			CreateMaterialsIfNeeded();
 
@@ -73,18 +66,18 @@ namespace kode80.Clouds
 			sunScreenSpace.x /= clouds.targetCamera.pixelWidth;
 			sunScreenSpace.y /= clouds.targetCamera.pixelHeight;
 
-			_material.SetTexture( "_Clouds", clouds.currentFrame);
-            _material.SetVector("_SunScreenSpace", sunScreenSpace);
-            _material.SetFloat("_SampleCount", sampleCount);
-            _material.SetFloat("_Density", density);
-            _material.SetFloat("_Decay", decay);
-            _material.SetFloat("_Weight", weight);
-            _material.SetFloat("_Exposure", exposure);
+			_material.SetTexture(Uniforms._Clouds, clouds.currentFrame);
+			_material.SetVector(Uniforms._SunScreenSpace, sunScreenSpace);
+			_material.SetFloat(Uniforms._SampleCount, sampleCount);
+			_material.SetFloat(Uniforms._Density, density);
+			_material.SetFloat(Uniforms._Decay, decay);
+			_material.SetFloat(Uniforms._Weight, weight);
+			_material.SetFloat(Uniforms._Exposure, exposure);
 
-            Graphics.Blit( src, dst, _material);
-        }
+			Graphics.Blit( src, dst, _material);
+		}
 
-        private void CreateMaterialsIfNeeded()
+		private void CreateMaterialsIfNeeded()
 		{
 			if( _material == null)
 			{
