@@ -18,6 +18,7 @@ using System.Collections;
 
 namespace kode80.Clouds
 {
+	[CreateAssetMenu(menuName="kode80/Clouds/CloudSettings")]
 	public class RenderSettings : ScriptableObject
 	{
 		[HeaderAttribute("Sun")]
@@ -27,11 +28,5 @@ namespace kode80.Clouds
 		[HeaderAttribute("Lighting")]
 		public Color cloudBaseColor;
 		public Color cloudTopColor;
-
-//		[MenuItem("Assets/Create/kode80/Clouds/RenderSettings")]
-//		public static void CreateAsset()
-//		{
-//			ScriptableObjectUtility.CreateAsset<Clouds.RenderSettings>( "CloudsRenderSettings");
-//		}
 	}
 }
